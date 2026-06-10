@@ -18,29 +18,29 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: var(--font); color: var(--text); background: #F0F2F5; font-size: 14px; line-height: 1.6; }
-
+ 
   /* Header */
   .page-header { background: #1A1F36; color: white; padding: 28px 40px 24px; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid #3B5CDB; }
   .page-header h1 { font-size: 19px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 5px; }
   .page-header .meta { font-size: 11.5px; color: rgba(255,255,255,0.6); display: flex; gap: 18px; flex-wrap: wrap; }
   .page-header .meta span::before { content: "•"; margin-right: 6px; opacity: 0.5; }
   .page-header .meta span:first-child::before { display: none; }
-
+ 
   /* Main tab nav */
   .main-nav { background: white; border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; gap: 0; position: sticky; top: 81px; z-index: 99; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
   .main-tab { padding: 13px 20px; font-size: 13px; font-weight: 600; color: var(--text-light); background: none; border: none; border-bottom: 3px solid transparent; margin-bottom: -1px; cursor: pointer; font-family: var(--font); letter-spacing: 0.1px; transition: color 0.15s, border-color 0.15s; white-space: nowrap; }
   .main-tab:hover { color: var(--blue); }
   .main-tab.mt-active { color: var(--blue); border-bottom-color: var(--blue); }
-
+ 
   .container { max-width: 980px; margin: 0 auto; padding: 28px 24px 80px; }
   .main-panel { display: none; }
   .main-panel.mp-active { display: block; }
-
+ 
   /* Sub-nav (within HeyMarvin tab) */
   .sub-nav { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 24px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
   .sub-nav a { padding: 6px 12px; font-size: 11.5px; font-weight: 600; color: var(--text-light); text-decoration: none; border-radius: 20px; border: 1px solid var(--border); background: white; transition: all 0.12s; }
   .sub-nav a:hover { color: var(--blue); border-color: var(--blue); background: var(--blue-bg); }
-
+ 
   /* Confidence notice */
   .confidence-notice { display: flex; gap: 12px; align-items: flex-start; background: white; border: 1px solid var(--border); border-left: 4px solid var(--green); border-radius: 8px; padding: 12px 16px; font-size: 12px; margin-bottom: 22px; line-height: 1.55; }
   .confidence-notice.warn { border-left-color: var(--orange); }
@@ -50,18 +50,18 @@
   .cb-sourced { background: #D2E3FC; color: #1A5EAA; }
   .cb-inferred { background: #FFF5E6; color: #B06000; }
   .cb-assumed { background: #FFF0EE; color: #C0392B; }
-
+ 
   /* Sections */
   .section { margin-bottom: 34px; }
   .section-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 14px; padding-bottom: 9px; border-bottom: 2px solid var(--border); display: flex; align-items: center; gap: 10px; }
-
+ 
   /* Sources grid */
   .source-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 12px; }
   .source-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start; }
   .project-id { font-size: 11px; font-weight: 800; color: white; background: #1A1F36; border-radius: 5px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0; font-family: monospace; }
   .project-name { font-weight: 700; font-size: 13px; }
   .project-meta { font-size: 11.5px; color: var(--text-light); margin-top: 2px; }
-
+ 
   /* Finding cards */
   .finding-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
   .finding-card h4 { font-size: 14px; font-weight: 700; margin: 6px 0 8px; }
@@ -76,14 +76,14 @@
   .prob-tag.credibility { background: #E8F0FF; color: #1A5EAA; }
   .prob-tag.wayfinding { background: #FFF0EE; color: #C0392B; }
   .prob-tag.qbtt { background: #E6F7F0; color: #1A6B45; }
-
+ 
   /* Quote cards */
   .quote-card { background: var(--quote-bg); border: 1px solid var(--quote-border); border-left: 3px solid var(--blue); border-radius: 8px; padding: 12px 14px; margin-top: 10px; }
   .quote-card blockquote { font-style: italic; font-size: 13px; line-height: 1.6; margin-bottom: 8px; }
   .attribution { display: flex; gap: 6px; flex-wrap: wrap; }
   .persona-chip { font-size: 10.5px; font-weight: 600; background: white; border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
   .source-chip { font-size: 10.5px; font-weight: 600; background: #1A1F36; color: rgba(255,255,255,0.85); border-radius: 4px; padding: 2px 7px; font-family: monospace; }
-
+ 
   /* Theme blocks */
   .theme-block { background: white; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
   .theme-header { padding: 10px 16px; font-size: 13px; font-weight: 700; }
@@ -93,7 +93,7 @@
   .theme-body { padding: 14px 16px; }
   .bullet-list { padding-left: 18px; display: flex; flex-direction: column; gap: 7px; font-size: 13px; }
   .bullet-list li { line-height: 1.55; }
-
+ 
   /* Needs grid */
   .needs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .needs-col { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
@@ -103,7 +103,7 @@
   .need-item { display: flex; gap: 8px; margin-bottom: 9px; font-size: 13px; line-height: 1.5; }
   .need-item:last-child { margin-bottom: 0; }
   .need-item .dot { font-size: 15px; flex-shrink: 0; margin-top: -1px; }
-
+ 
   /* Summary table */
   .summary-table { width: 100%; border-collapse: collapse; font-size: 12.5px; background: white; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
   .summary-table th { background: #1A1F36; color: rgba(255,255,255,0.85); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 14px; text-align: left; white-space: nowrap; }
@@ -121,12 +121,12 @@
   .sev-dot.opportunity::before { background: var(--green); }
   .sev-dot.medium::before { background: #B06000; }
   .proj-badge { font-size: 10px; background: var(--gray-bg); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; color: var(--text-light); font-weight: 600; white-space: nowrap; font-family: monospace; }
-
+ 
   /* Gap list */
   .gap-list { display: flex; flex-direction: column; gap: 8px; }
   .gap-item { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-size: 13px; display: flex; gap: 10px; align-items: flex-start; }
   .gap-item .gap-icon { font-size: 16px; margin-top: 1px; flex-shrink: 0; }
-
+ 
   /* Hallucination check section */
   .hc-section { background: #FFFDF0; border: 1px solid #F0D800; border-left: 4px solid #C0A000; border-radius: 8px; padding: 16px 18px; margin-top: 28px; }
   .hc-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #7A6000; margin-bottom: 12px; }
@@ -137,7 +137,7 @@
   .hc-sourced { background: #D2E3FC; color: #1A5EAA; }
   .hc-inferred { background: #FFF5E6; color: #B06000; }
   .hc-assumed { background: #FFF0EE; color: #C0392B; }
-
+ 
   /* VOC sub-tabs */
   .voc-subnav { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 18px; border-bottom: 2px solid var(--border); padding-bottom: 0; }
   .voc-subtab { padding: 9px 14px; font-size: 12px; font-weight: 600; color: var(--text-light); background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; cursor: pointer; white-space: nowrap; transition: color 0.15s, border-color 0.15s; font-family: var(--font); }
@@ -173,7 +173,7 @@
   .backtrack-table .rec-id { font-family: monospace; font-weight: 700; color: var(--text-light); white-space: nowrap; }
   .backtrack-table .tab-src { font-size: 10px; font-weight: 600; background: var(--gray-bg); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; white-space: nowrap; display: inline-block; }
   .backtrack-table .sq { font-size: 10.5px; font-family: monospace; color: var(--text-light); }
-
+ 
   /* Strategy tab */
   .strategy-notice { background: #FFF5E6; border: 1px solid #FFD080; border-left: 4px solid var(--orange); border-radius: 8px; padding: 13px 16px; font-size: 12.5px; line-height: 1.6; margin-bottom: 22px; }
   .strategy-section { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 14px; }
@@ -199,10 +199,10 @@
   .deliverable-card .d-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 5px; }
   .deliverable-card .d-label.cx { color: var(--blue); }
   .deliverable-card .d-label.product { color: var(--purple); }
-
+ 
   /* Footer */
   .brief-footer { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-light); text-align: center; }
-
+ 
   @media (max-width: 720px) {
     .source-grid, .needs-grid, .problem-chips, .deliverable-grid { grid-template-columns: 1fr; }
     .page-header { padding: 18px 20px; }
@@ -213,7 +213,7 @@
 </style>
 </head>
 <body>
-
+ 
 <div class="page-header">
   <h1>BizTax Find Phase — TY25 Research Brief</h1>
   <div class="meta">
@@ -223,26 +223,26 @@
     <span>Pulled June 9, 2026</span>
   </div>
 </div>
-
+ 
 <nav class="main-nav">
   <button class="main-tab mt-active" onclick="switchMain(this,'tab-overview')">⚡ Key Findings</button>
   <button class="main-tab" onclick="switchMain(this,'tab-hm')">🔬 HeyMarvin Research</button>
   <button class="main-tab" onclick="switchMain(this,'tab-voc')">🗣️ VOC Suite Research</button>
   <button class="main-tab" onclick="switchMain(this,'tab-strategy')">🧭 Find Phase Strategy</button>
 </nav>
-
+ 
 <div class="container">
-
+ 
 <!-- ====================================================
      TAB 0: KEY FINDINGS OVERVIEW
      ==================================================== -->
 <div id="tab-overview" class="main-panel mp-active">
-
+ 
   <div style="display:flex;align-items:flex-start;gap:14px;background:white;border:1px solid var(--border);border-left:4px solid #3B5CDB;border-radius:8px;padding:13px 16px;font-size:12.5px;margin-bottom:22px;line-height:1.6;">
     <div style="font-size:16px;flex-shrink:0;">📌</div>
     <div>Top findings across all TY25 research — HeyMarvin (4 projects, N≈50 external customers) and Intuit VOC Suite (5 semantic searches, ~2,500 contact center records). Each finding is linked to at least one direct source. <strong>For full evidence, see the HeyMarvin and VOC tabs.</strong></div>
   </div>
-
+ 
   <!-- FINDING 1 -->
   <div class="finding-card">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
@@ -262,7 +262,7 @@
       <div class="attribution"><span class="persona-chip">QB LLC Owner</span><span class="source-chip">VOC Suite Tab 4 · Rec #356</span></div>
     </div>
   </div>
-
+ 
   <!-- FINDING 2 -->
   <div class="finding-card">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
@@ -281,7 +281,7 @@
       <div class="attribution"><span class="persona-chip">Business Tax Customer</span><span class="source-chip">VOC Suite Tab 4 · Rec #204</span></div>
     </div>
   </div>
-
+ 
   <!-- FINDING 3 -->
   <div class="finding-card">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
@@ -300,7 +300,7 @@
       <div class="attribution"><span class="persona-chip">Business Customer</span><span class="source-chip">VOC Suite Tab 1 · Rec #206</span></div>
     </div>
   </div>
-
+ 
   <!-- FINDING 4 -->
   <div class="finding-card">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
@@ -319,7 +319,7 @@
       <div class="attribution"><span class="persona-chip">BizTax Customer</span><span class="source-chip">VOC Suite Tab 3 · Rec #18</span></div>
     </div>
   </div>
-
+ 
   <!-- FINDING 5 -->
   <div class="finding-card">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
@@ -338,7 +338,7 @@
       <div class="attribution"><span class="persona-chip">BizTax Customer</span><span class="source-chip">VOC Suite Tab 3 · Rec #26</span></div>
     </div>
   </div>
-
+ 
   <!-- FINDING 6 -->
   <div class="finding-card">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
@@ -357,7 +357,7 @@
       <div class="attribution"><span class="persona-chip">Marnie W. · LLC/Partnership</span><span class="source-chip">HeyMarvin #50577</span></div>
     </div>
   </div>
-
+ 
   <!-- FINDING 7 -->
   <div class="finding-card">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
@@ -376,7 +376,7 @@
       <div class="attribution"><span class="persona-chip">Single-member LLC</span><span class="source-chip">VOC Suite Tab 1 · Rec #139</span></div>
     </div>
   </div>
-
+ 
   <!-- FINDING 8 -->
   <div class="finding-card">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
@@ -395,7 +395,7 @@
       <div class="attribution"><span class="persona-chip">BizTax Customer</span><span class="source-chip">VOC Suite Tab 2 · Rec #18</span></div>
     </div>
   </div>
-
+ 
   <!-- FINDING 9 -->
   <div class="finding-card">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
@@ -414,7 +414,7 @@
       <div class="attribution"><span class="persona-chip">Churner · IT Services, ~$10–12M</span><span class="source-chip">HeyMarvin #54075</span></div>
     </div>
   </div>
-
+ 
   <!-- FINDING 10 -->
   <div class="finding-card">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
@@ -433,19 +433,19 @@
       <div class="attribution"><span class="persona-chip">BizTax Customer</span><span class="source-chip"><a href="https://app.heymarvin.com/insight/1a000bb6-e6b1-4dcc-a97a-e7c17516f10a/" target="_blank" style="color:inherit;">BizTax Insight</a></span></div>
     </div>
   </div>
-
+ 
 </div>
-
+ 
 <!-- ====================================================
      TAB 1: HEYMARVIN RESEARCH
      ==================================================== -->
 <div id="tab-hm" class="main-panel">
-
+ 
   <div class="confidence-notice">
     <div class="cn-icon">✅</div>
     <div><span class="confidence-badge cb-backed">Data-Backed</span> All findings in this tab are sourced from external customer HeyMarvin sessions (FMHs, interviews). Every claim includes a named participant or session source. Qualitative only — no tNPS or funnel metrics. <strong>Where summaries go beyond a single quoted participant, this is flagged inline.</strong></div>
   </div>
-
+ 
   <div class="sub-nav">
     <a href="#hm-sources">📁 Sources</a>
     <a href="#hm-findings">🔍 Top Findings</a>
@@ -456,7 +456,7 @@
     <a href="#hm-quotes">💬 Direct Quotes Bank</a>
     <a href="#hm-gaps">🔍 Gaps</a>
   </div>
-
+ 
   <!-- SOURCES -->
   <div id="hm-sources" class="section">
     <div class="section-title"><span>📁</span> HeyMarvin Sources</div>
@@ -475,20 +475,8 @@
           <div class="project-meta">N=7 FMHs + churner interviews · Mar–May 2026</div>
         </div>
       </div>
-      <div class="source-card" style="opacity:0.5;border:1px dashed #ccc;background:#fafafa;">
-        <div class="project-id" style="background:#999;">#49718</div>
-        <div>
-          <div class="project-name" style="text-decoration:line-through;">TY25 DIWM FMHs</div>
-          <div class="project-meta" style="color:#c00;">⛔ Reviewed — all cited participants confirmed non-BizTax. Excluded from this brief.</div>
-        </div>
-      </div>
-      <div class="source-card" style="opacity:0.5;border:1px dashed #ccc;background:#fafafa;">
-        <div class="project-id" style="background:#999;">#55829</div>
-        <div>
-          <div class="project-name" style="text-decoration:line-through;">DIWM Abandonment April 2026</div>
-          <div class="project-meta" style="color:#c00;">⛔ Excluded — confirmed consumer project, not BizTax.</div>
-        </div>
-      </div>
+ 
+ 
       <div class="source-card" style="border:1px solid #1A7A4A;">
         <div class="project-id" style="background:#1A7A4A;">#54891</div>
         <div>
@@ -502,11 +490,11 @@
       <div><strong>Excluded:</strong> Signal VOC Suite TY25 2nd peak (#57771) — internal Signal ops retrospectives and CX analyst focus groups only. No external customer sessions found.</div>
     </div>
   </div>
-
+ 
   <!-- TOP FINDINGS -->
   <div id="hm-findings" class="section">
     <div class="section-title"><span>🔍</span> Top Findings — Find Phase Signals</div>
-
+ 
     <div class="finding-card">
       <span class="finding-tag critical">🔴 Critical</span> <span class="prob-tag wayfinding">③ Wayfinding</span> <span class="prob-tag qbtt">④ QB/TT Gap</span>
       <h4>QB Routes Customers to the Wrong Product</h4>
@@ -516,7 +504,7 @@
         <div class="attribution"><span class="persona-chip">Marnie W. · LLC/Partnership</span><span class="source-chip">TY25 BT E2E FMHs #50577</span></div>
       </div>
     </div>
-
+ 
     <div class="finding-card">
       <span class="finding-tag critical">🔴 Critical</span> <span class="prob-tag credibility">② Expert Credibility</span>
       <h4>Customers Can't Tell AI from Human Expert</h4>
@@ -526,7 +514,7 @@
         <div class="attribution"><span class="persona-chip">Pearson W. · Sole Prop</span><span class="source-chip">TY25 BT E2E FMHs #50577</span></div>
       </div>
     </div>
-
+ 
     <div class="finding-card">
       <span class="finding-tag critical">🔴 Critical</span> <span class="prob-tag credibility">② Expert Credibility</span>
       <h4>"Tax Advisor" Title Dismissed — Customers Want CPA Credentials</h4>
@@ -540,7 +528,7 @@
         <div class="attribution"><span class="persona-chip">Lorraine · SE/SMB</span><span class="source-chip"><a href="https://app.heymarvin.com/insight/95eebef2-f6dc-41fb-a953-86eaa8a963c3/" target="_blank" style="color:inherit;">BizTax Insight</a></span></div>
       </div>
     </div>
-
+ 
     <div class="finding-card">
       <span class="finding-tag critical">🔴 Critical</span> <span class="prob-tag wayfinding">③ Wayfinding</span> <span class="prob-tag brand">① Brand</span>
       <h4>Pricing by Entity Type Hidden Until Mid-Session</h4>
@@ -550,9 +538,9 @@
         <div class="attribution"><span class="persona-chip">Marnie W. · LLC/Partnership</span><span class="source-chip">TY25 BT E2E FMHs #50577</span></div>
       </div>
     </div>
-
-
-
+ 
+ 
+ 
     <div class="finding-card">
       <span class="finding-tag opportunity">🟢 Opportunity</span> <span class="prob-tag credibility">② Expert Credibility</span>
       <h4>Expert Continuity Is the Strongest WTP Signal in This Corpus</h4>
@@ -563,7 +551,7 @@
       </div>
     </div>
   </div>
-
+ 
   <!-- PAIN POINT THEMES -->
   <div id="hm-themes" class="section">
     <div class="section-title"><span>🚨</span> Pain Point Themes <span style="font-size:11px;font-weight:400;color:var(--text-light);margin-left:6px;">— Synthesized across N≈50 sessions · <span class="confidence-badge cb-inferred" style="margin-left:4px;">Synthesized</span></span></div>
@@ -571,7 +559,7 @@
       <div class="cn-icon">🔶</div>
       <div>These themes are synthesized from patterns across sessions. Each theme is grounded in at least one direct quote (see Quotes Bank), but themes represent a researcher interpretation — not a count or frequency analysis. No tNPS or funnel data is available to quantify volume.</div>
     </div>
-
+ 
     <div class="theme-block">
       <div class="theme-header red">🗺️ Navigating to the Right Product</div>
       <div class="theme-body">
@@ -583,7 +571,7 @@
         </ul>
       </div>
     </div>
-
+ 
     <div class="theme-block">
       <div class="theme-header red">🤷 Expert Credibility at the Front Door</div>
       <div class="theme-body">
@@ -594,7 +582,7 @@
         </ul>
       </div>
     </div>
-
+ 
     <div class="theme-block">
       <div class="theme-header red">💸 Pricing and Service Level Confusion</div>
       <div class="theme-body">
@@ -604,7 +592,7 @@
         </ul>
       </div>
     </div>
-
+ 
     <div class="theme-block">
       <div class="theme-header orange">🔗 QuickBooks Integration Failures</div>
       <div class="theme-body">
@@ -617,7 +605,7 @@
       </div>
     </div>
   </div>
-
+ 
   <!-- NEEDS & WANTS -->
   <div id="hm-needs" class="section">
     <div class="section-title"><span>🎯</span> Customer Needs & Wants <span style="font-size:11px;font-weight:400;color:var(--text-light);margin-left:6px;"><span class="confidence-badge cb-inferred" style="margin-left:4px;">Synthesized from FMHs</span></span></div>
@@ -641,16 +629,16 @@
         <div class="need-item"><span class="dot">🪄</span><div><strong>An expert who already knows their situation.</strong> Not a generic offer — a proactive, situation-aware match. <em style="color:var(--text-light);font-size:11.5px;">(Rodrik, S-Corp — <a href="https://app.heymarvin.com/insight/7f087d2e-82c6-42a0-971f-ef00c7ca9efe/" target="_blank">BizTax Insight</a>)</em></div></div>
         <div class="need-item"><span class="dot">⚡</span><div><strong>Speed and confidence from their expert.</strong> Fast + knowledgeable = stress relief and WTP. <em style="color:var(--text-light);font-size:11.5px;">(Nathaniel, single-member LLC — <a href="https://app.heymarvin.com/insight/6a8ebdee-35cc-4a03-a050-6e2538260fa9/" target="_blank">BizTax Insight</a>)</em></div></div>
         <div class="need-item"><span class="dot">💼</span><div><strong>To feel like a sophisticated business owner.</strong> LLCs, S-Corps don't want DIY flows designed for gig workers. <em style="color:var(--text-light);font-size:11.5px;">(Synthesized from #50577)</em></div></div>
-
+ 
         <div class="need-item"><span class="dot">🛠️</span><div><strong>A product that feels like an integrated business tool.</strong> Year-round access, planning, QB connection that actually works. <em style="color:var(--text-light);font-size:11.5px;">(Synthesized from #50577, #54075)</em></div></div>
       </div>
     </div>
   </div>
-
+ 
   <!-- FIND PHASE BARRIERS -->
   <div id="hm-barriers" class="section">
     <div class="section-title"><span>🚧</span> Find Phase Barriers — Detailed Findings</div>
-
+ 
     <div class="finding-card">
       <span class="finding-tag critical">🔴 Critical</span> <span class="prob-tag wayfinding">③ Wayfinding</span> <span class="prob-tag qbtt">④ QB/TT Gap</span>
       <h4>QB Routes Customers to the Wrong Product</h4>
@@ -660,7 +648,7 @@
         <div class="attribution"><span class="persona-chip">Marnie W. · LLC/Partnership</span><span class="source-chip">TY25 BT E2E FMHs #50577</span></div>
       </div>
     </div>
-
+ 
     <div class="finding-card">
       <span class="finding-tag critical">🔴 Critical</span> <span class="prob-tag wayfinding">③ Wayfinding</span>
       <h4>Entity Type Has No Confirmation at Entry</h4>
@@ -670,7 +658,7 @@
         <div class="attribution"><span class="persona-chip">Participant · LLC</span><span class="source-chip">TY25 BT E2E FMHs #50577</span></div>
       </div>
     </div>
-
+ 
     <div class="finding-card">
       <span class="finding-tag high">🟠 High</span> <span class="prob-tag brand">① Brand</span> <span class="prob-tag qbtt">④ QB/TT Gap</span>
       <h4>Brand Inertia Beats the QB Integration Benefit</h4>
@@ -680,7 +668,7 @@
         <div class="attribution"><span class="persona-chip">Tahera C. · SMLLC</span><span class="source-chip">TY25 BT E2E FMHs #50577 — on staying with H&R Block</span></div>
       </div>
     </div>
-
+ 
     <div class="finding-card">
       <span class="finding-tag high">🟠 High</span> <span class="prob-tag qbtt">④ QB/TT Gap</span>
       <h4>Chart of Accounts Mapping Creates ~$20k Tax Variance (One Participant)</h4>
@@ -694,16 +682,16 @@
         <div class="attribution"><span class="persona-chip">April</span><span class="source-chip">#54075</span></div>
       </div>
     </div>
-
+ 
     <div class="finding-card">
       <span class="finding-tag medium">🟡 Medium</span> <span class="prob-tag credibility">② Expert Credibility</span>
       <h4>Aggressive Upsell Prompts Before Help Is Needed Reduce Trust</h4>
       <p>Mike S. flagged "chat now / live help" prompts as appearing too early. For long-time DIY users, premature upsell signals suggest the product doesn't trust them to handle it themselves.</p>
     </div>
-
-
+ 
+ 
   </div>
-
+ 
   <!-- SUMMARY TABLE -->
   <div id="hm-summary" class="section">
     <div class="section-title"><span>📊</span> Summary: Critical Signals by Theme</div>
@@ -715,8 +703,8 @@
         <tr><td><strong>QB→TT product routing</strong></td><td>QB sends customers to personal TT/Schedule C</td><td><span class="sev-dot critical">Critical</span></td><td><span class="proj-badge">#50577</span></td></tr>
         <tr><td><strong>Entity type confirmation</strong></td><td>No in-product confirmation of correct workflow</td><td><span class="sev-dot critical">Critical</span></td><td><span class="proj-badge">#50577</span></td></tr>
         <tr><td><strong>Pricing opacity by entity</strong></td><td>$150 vs. $399 not surfaced until mid-session</td><td><span class="sev-dot critical">Critical</span></td><td><span class="proj-badge">#50577</span></td></tr>
-
-
+ 
+ 
         <tr><td><strong>AI vs. expert indistinguishable</strong></td><td>Customers unsure if talking to AI or human</td><td><span class="sev-dot critical">Critical</span></td><td><span class="proj-badge">#50577</span></td></tr>
         <tr><td><strong>"Tax advisor" dismissed</strong></td><td>Customers want CPA credential or situational match</td><td><span class="sev-dot critical">Critical</span></td><td><span class="proj-badge">BizTax Insights</span></td></tr>
         <tr style="background:#EAF7F0"><td><strong>Expert continuity drives WTP</strong></td><td>Year-over-year same expert = strong retention intent</td><td><span class="sev-dot opportunity">Opportunity</span></td><td><span class="proj-badge">#54891</span></td></tr>
@@ -724,23 +712,23 @@
         <tr><td><strong>QB account mapping → $20k variance</strong></td><td>Chart of accounts mismatch creates accuracy distrust (1 participant)</td><td><span class="sev-dot high">High</span></td><td><span class="proj-badge">#54075</span></td></tr>
         <tr><td><strong>Manual entry faster than importing</strong></td><td>Import UX slower than manual for many users</td><td><span class="sev-dot high">High</span></td><td><span class="proj-badge">#54075</span></td></tr>
         <tr><td><strong>Brand inertia vs. QB integration</strong></td><td>H&R Block loyalty not overcome by QB connection</td><td><span class="sev-dot high">High</span></td><td><span class="proj-badge">#50577</span></td></tr>
-
-
+ 
+ 
       </tbody>
     </table>
   </div>
-
+ 
   <!-- DIRECT QUOTES BANK -->
   <div id="hm-quotes" class="section">
     <div class="section-title"><span>💬</span> Direct Quotes Bank — TY25, External Customers Only</div>
-
+ 
     <div style="margin-bottom:16px">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:10px;">Getting to BizTax</div>
       <div class="quote-card"><blockquote>"It seemed like there would be a reasonable expectation it would take me to a business TurboTax software...but it returned me to where I had already started."</blockquote><div class="attribution"><span class="persona-chip">Marnie W.</span><span class="source-chip">#50577</span></div></div>
       <div class="quote-card"><blockquote>"I'll deal with the devil I'm used to."</blockquote><div class="attribution"><span class="persona-chip">Tahera C. · SMLLC</span><span class="source-chip">#50577</span></div></div>
       <div class="quote-card"><blockquote>"My only concern as it says it's for sole proprietorship and we're considered an LLC."</blockquote><div class="attribution"><span class="persona-chip">Participant · LLC</span><span class="source-chip">#50577</span></div></div>
     </div>
-
+ 
     <div style="margin-bottom:16px">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:10px;">Expert Credibility</div>
       <div class="quote-card"><blockquote>"DIWM and FS shoppers wanted more clarity on what's included, who the experts were, and how they'd work with the expert."</blockquote><div class="attribution"><span class="persona-chip">BizTax Research Synthesis</span><span class="source-chip"><a href="https://app.heymarvin.com/insight/c5fda4d4-9855-475b-8b8d-0873d85d1050/" target="_blank" style="color:inherit;">BizTax Insight</a></span></div></div>
@@ -748,20 +736,20 @@
       <div class="quote-card"><blockquote>"It's a mix of gut reaction and I'll also take a look at their LinkedIn as well… an Instagram account or social media just to see… keep alignment with… who they say they are."</blockquote><div class="attribution"><span class="persona-chip">Lorraine · SE/SMB</span><span class="source-chip"><a href="https://app.heymarvin.com/insight/95eebef2-f6dc-41fb-a953-86eaa8a963c3/" target="_blank" style="color:inherit;">BizTax Insight</a></span></div></div>
       <div class="quote-card"><blockquote>"I'm assuming Intuit Assist is some kind of AI agent platform and Expert Help actually would get you a human, but...unsure."</blockquote><div class="attribution"><span class="persona-chip">Pearson W. · Sole Prop</span><span class="source-chip">#50577</span></div></div>
     </div>
-
+ 
     <div style="margin-bottom:16px">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:10px;">Positive Expert Experiences</div>
       <div class="quote-card" style="border-left-color:#1A7A4A;background:#EAF7F0;"><blockquote style="color:#1A5C3A;">"And if we were able to retain our same person that we're using, you know, the past two years, that would be really nice and just... yeah, that's kind of also our wish list."</blockquote><div class="attribution"><span class="persona-chip">Rebbeca · Sole Prop LLC</span><span class="source-chip"><a href="https://app.heymarvin.com/projects/54891/media/32270646/?st=0:05:30.850000&et=0:06:06" target="_blank" style="color:inherit;">#54891</a></span></div></div>
       <div class="quote-card" style="border-left-color:#1A7A4A;background:#EAF7F0;"><blockquote style="color:#1A5C3A;">"It'd be fantastic to be able to connect with that expert again, who already knows our case."</blockquote><div class="attribution"><span class="persona-chip">Rodrik · S-Corp</span><span class="source-chip"><a href="https://app.heymarvin.com/insight/7f087d2e-82c6-42a0-971f-ef00c7ca9efe/" target="_blank" style="color:inherit;">BizTax Insight</a></span></div></div>
       <div class="quote-card" style="border-left-color:#1A7A4A;background:#EAF7F0;"><blockquote style="color:#1A5C3A;">"My expert sounds like she knows what she is talking about, and answered some critical questions for me."</blockquote><div class="attribution"><span class="persona-chip">BizTax Customer</span><span class="source-chip"><a href="https://app.heymarvin.com/insight/fd0a2c99-42e2-4a2a-83db-1918584510b1/" target="_blank" style="color:inherit;">BizTax Insight</a></span></div></div>
     </div>
-
+ 
     <div style="margin-bottom:16px">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:10px;">Pricing & Service Confusion</div>
-
+ 
       <div class="quote-card"><blockquote>"Let an expert file your taxes for only $150 only applies to sole proprietors...for $399 we may be able to...It's better than $1,200."</blockquote><div class="attribution"><span class="persona-chip">Marnie W. · LLC/Partnership</span><span class="source-chip">#50577</span></div></div>
     </div>
-
+ 
     <div>
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:10px;">QB→TT Integration</div>
       <div class="quote-card"><blockquote>"My biggest issue was aligning the categories within the chart of accounts with the categories that TurboTax wanted them in. And that transition was never a clean conversation."</blockquote><div class="attribution"><span class="persona-chip">April · S-Corp, Construction</span><span class="source-chip">#54075</span></div></div>
@@ -769,7 +757,7 @@
       <div class="quote-card"><blockquote>"I'm just looking forward to finding another accounting software that has a good relationship with tax software. So that works well together."</blockquote><div class="attribution"><span class="persona-chip">Churner 1 · IT Services, ~$10–12M</span><span class="source-chip">#54075</span></div></div>
     </div>
   </div>
-
+ 
   <!-- GAPS -->
   <div id="hm-gaps" class="section">
     <div class="section-title"><span>🔍</span> Gaps in TY25 HeyMarvin Data</div>
@@ -780,34 +768,34 @@
       <div class="gap-item" style="background:#FFF9E6;border-color:#FFE0A3;"><div class="gap-icon">⛔</div><div><strong>Signal 2nd peak focus groups (#57771, Jun 3–8)</strong> — confirmed internal only. No external customer sessions found.</div></div>
     </div>
   </div>
-
+ 
   <!-- HALLUCINATION CHECK -->
   <div class="hc-section">
     <div class="hc-title">📋 Source & Integrity Notes — HeyMarvin Tab</div>
-    <div class="hc-item"><span class="hc-label hc-backed">✅ DATA-BACKED</span> All direct quotes include participant name/pseudonym and HeyMarvin project ID. Confirmed BizTax sessions: #50577, #54075, #54891 + BizTax insight synthesis. #55829 and #49718 excluded — confirmed consumer projects.</div>
+    <div class="hc-item"><span class="hc-label hc-backed">✅ DATA-BACKED</span> All direct quotes include participant name/pseudonym and HeyMarvin project ID. Confirmed BizTax sessions: #50577 (N=20), #54075 (N=7), #54891 + BizTax insight synthesis.</div>
     <div class="hc-item"><span class="hc-label hc-inferred">🔶 INFERENCE</span> "Multiple E2E FMH participants didn't know whether they were in the right product" — only Marnie W. and an unnamed LLC participant are directly quoted. "Multiple" is drawn from researcher session summary notes, not independently quoted participants. Flagged inline above.</div>
     <div class="hc-item"><span class="hc-label hc-inferred">🔶 INFERENCE</span> Customer needs/wants items marked "(Synthesized)" represent researcher pattern recognition across sessions — grounded but not verbatim. Each synthesized item is labeled with its source session(s).</div>
     <div class="hc-item"><span class="hc-label hc-inferred">🔶 INFERENCE</span> The ~$20k variance figure is from a single participant (April, #54075). It is not confirmed as a systemic issue across the research population. Flagged inline.</div>
     <div class="hc-item"><span class="hc-label hc-backed">✅ DATA-BACKED</span> Expert continuity as WTP driver is directly stated by Rebbeca (Sole Prop LLC, #54891) and corroborated by BizTax insight synthesis across additional confirmed BizTax participants.</div>
     <div style="margin-top:10px;font-size:11.5px;color:var(--text-light);">📊 <strong>Output Confidence: Medium-High.</strong> Key critical findings are data-backed with named sources. Synthesized themes and pattern claims involve reasonable researcher inference and are labeled. No ❌ unsourced claims present.</div>
   </div>
-
+ 
 </div>
-
+ 
 <!-- ====================================================
      TAB 2: VOC SUITE RESEARCH
      ==================================================== -->
 <div id="tab-voc" class="main-panel">
-
+ 
   <div class="confidence-notice">
     <div class="cn-icon">✅</div>
     <div><span class="confidence-badge cb-backed">Data-Backed</span> All signals in this tab are from the Intuit VOC Suite Google Sheets export, Jan–Jun 2026 (~500 records per tab). Each signal includes a Record ID traceable to the source sheet. Theme syntheses are labeled as inferred — they represent patterns across records, not individual quotes.</div>
   </div>
-
+ 
   <div style="background:#E8F0FF;border:1px solid #C0D4F5;border-radius:8px;padding:13px 16px;font-size:13px;line-height:1.6;margin-bottom:18px;">
     <strong>Source:</strong> Intuit VOC Suite — contact center transcript semantic search, Jan–Jun 2026. Five semantic searches across ~500 records each (2,500 total). Each tab below = one Google Sheet. To pull a full transcript: open the VOC Suite, navigate to the tab, look up the Record ID. The search query column shows the exact query used — re-run to re-locate.
   </div>
-
+ 
   <div class="voc-subnav">
     <button class="voc-subtab vst-active" onclick="switchVoc(this,'vp1')">1 · BizTax Services</button>
     <button class="voc-subtab" onclick="switchVoc(this,'vp2')">2 · Landing Page</button>
@@ -815,7 +803,7 @@
     <button class="voc-subtab" onclick="switchVoc(this,'vp4')">4 · Where Do I Start</button>
     <button class="voc-subtab" onclick="switchVoc(this,'vp5')">5 · Price</button>
   </div>
-
+ 
   <!-- PANEL 1 -->
   <div id="vp1" class="voc-panel vp-active">
     <div class="voc-tab-info">
@@ -852,7 +840,7 @@
       <div class="voc-signal wayfinding-signal"><div class="signal-id">Record #14</div><blockquote>"Sole proprietor received email recommending business taxes first — then was confused by partnership questions that didn't apply. 'It was very confusing and very different.'"</blockquote><span class="prob-tag wayfinding">Wayfinding</span><div class="signal-note">Marketing-triggered misrouting: email channel sending sole props into entity-wrong flows.</div></div>
     </div>
   </div>
-
+ 
   <!-- PANEL 2 -->
   <div id="vp2" class="voc-panel">
     <div class="voc-tab-info">
@@ -889,7 +877,7 @@
       <div class="voc-signal brand-signal"><div class="signal-id">Record #44</div><blockquote>"Last year I just sat down and typed in my information and it was great. This time I don't know how long I've been on your website, but I can't even get started."</blockquote><span class="prob-tag brand">Brand</span><span class="prob-tag wayfinding">Wayfinding</span><div class="signal-note">Returning customer can't find the path they know exists — prior trust being actively eroded.</div></div>
     </div>
   </div>
-
+ 
   <!-- PANEL 3 -->
   <div id="vp3" class="voc-panel">
     <div class="voc-tab-info">
@@ -926,7 +914,7 @@
       <div class="voc-signal brand-signal"><div class="signal-id">Record #26</div><blockquote>"Tax Expert feature appears to use AI-generated responses rather than genuine expert knowledge."</blockquote><span class="prob-tag credibility">Expert Credibility</span><span class="prob-tag brand">Brand</span><div class="signal-note">AI/HI ambiguity closes the consideration window before a match occurs.</div></div>
     </div>
   </div>
-
+ 
   <!-- PANEL 4 -->
   <div id="vp4" class="voc-panel">
     <div class="voc-tab-info">
@@ -964,7 +952,7 @@
       <div class="voc-signal qbtt-signal"><div class="signal-id">Record #356</div><blockquote>"Started automotive repair LLC, clicked 'start taxes' in QuickBooks, which brought them to TurboTax Online — immediately unsure how data would transfer between the systems."</blockquote><span class="prob-tag qbtt">QB→TT</span><span class="prob-tag wayfinding">Wayfinding</span><div class="signal-note">The integration promise creates an expectation of data continuity — then doesn't deliver it.</div></div>
     </div>
   </div>
-
+ 
   <!-- PANEL 5 -->
   <div id="vp5" class="voc-panel">
     <div class="voc-tab-info">
@@ -1002,7 +990,7 @@
       <div class="voc-signal price-signal"><div class="signal-id">Record #200</div><blockquote>"Initially quoted $190 during registration; payment page now shows $518."</blockquote><span class="prob-tag brand">Brand</span><div class="signal-note">Mid-flow escalation after emotional commitment reads as deceptive, not as complexity-based pricing.</div></div>
     </div>
   </div>
-
+ 
   <!-- BACKTRACK TABLE -->
   <div style="margin-top:28px;">
     <div class="section-title"><span>📋</span> Priority Backtrack Table — Full-Transcript Candidates</div>
@@ -1045,7 +1033,7 @@
       </tbody>
     </table>
   </div>
-
+ 
   <!-- VOC HALLUCINATION CHECK -->
   <div class="hc-section" style="margin-top:28px;">
     <div class="hc-title">📋 Source & Integrity Notes — VOC Suite Tab</div>
@@ -1054,19 +1042,19 @@
     <div class="hc-item"><span class="hc-label hc-assumed">⚠️ NOTE</span> Record IDs are as exported from the Google Sheets. They have not been independently verified against the live VOC Suite system. If a record cannot be found by ID, re-run the search query listed to re-locate it.</div>
     <div style="margin-top:10px;font-size:11.5px;color:var(--text-light);">📊 <strong>Output Confidence: Medium-High.</strong> Individual signals are traceable. Theme synthesis is labeled as inference. Record IDs are from the provided export and should be verified before referencing externally.</div>
   </div>
-
+ 
 </div>
-
+ 
 <!-- ====================================================
      TAB 3: FIND PHASE STRATEGY GROUNDING
      ==================================================== -->
 <div id="tab-strategy" class="main-panel">
-
+ 
   <div class="strategy-notice">
     <strong>⚠️ This tab contains Intuit strategy context — not primary customer research.</strong> The statistics, segment definitions, and strategic priorities below are sourced from internal Intuit strategy documents and project instructions. They should not be mixed with or used as evidence alongside the HeyMarvin or VOC Suite customer data. Use this tab to contextualize findings, not to substantiate them.
     <br><br><span class="confidence-badge cb-sourced" style="margin-left:0;">📎 Sourced</span> — All content here is from Intuit strategy documentation (FY27 OIBT Strategy, Find Phase project instructions). No primary customer research data.
   </div>
-
+ 
   <div class="strategy-section">
     <h3>Find Phase — Definition</h3>
     <p style="font-size:13px;line-height:1.6;color:var(--text);">The Find Phase is the first phase of the business tax filing experience, defined by the customer question:</p>
@@ -1074,12 +1062,12 @@
     <p style="font-size:12px;color:var(--text-light);">Primary pod: Expert Continuity · Cross-cutting: Product lineup confusion, Channel consistency</p>
     <p style="font-size:12px;color:var(--text-light);margin-top:6px;"><span class="confidence-badge cb-sourced">📎 Sourced</span> Find Phase project instructions / OIBT FY27 Strategy documentation</p>
   </div>
-
+ 
   <div class="goal-banner">
     <div class="goal-icon">🎯</div>
     <div class="goal-text"><strong>FY27 Goal 1: Win the Unattached Customer.</strong> Get ~4.5M unattached solo business owners (the "Maya" segment) to choose Intuit before competitors lock them in. The Find Phase is directly responsible for creating the conditions for Goal 1. <span style="color:rgba(255,255,255,0.55);font-size:11.5px;display:block;margin-top:4px;">📎 Source: OIBT FY27 Strategy documentation — this is strategy intent, not a validated research outcome.</span></div>
   </div>
-
+ 
   <div class="framing-box">
     <div class="framing-label">CX North Star Vision <span style="color:rgba(255,255,255,0.4);font-size:10px;font-weight:400;margin-left:8px;">📎 Source: Find Phase project instructions</span></div>
     <div class="vision-quote">"A BGS customer arriving at any Intuit touchpoint should immediately understand they are in the right place, see evidence of real expert capability before being asked to commit, and have a clear path to the right service level without self-diagnosing. The 'Start Anywhere, Finish Anywhere' promise requires a consistent experience across digital, in-store, and virtual channels."</div>
@@ -1107,7 +1095,7 @@
       </div>
     </div>
   </div>
-
+ 
   <div class="strategy-section">
     <h3>FY27 Find Phase Deliverables</h3>
     <p style="font-size:12px;color:var(--text-light);margin-bottom:12px;"><span class="confidence-badge cb-sourced">📎 Sourced</span> From OIBT FY27 project instructions. These are stated deliverables, not research findings.</p>
@@ -1144,7 +1132,7 @@
       </div>
     </div>
   </div>
-
+ 
   <div class="strategy-section">
     <h3>How Research Maps to Strategy</h3>
     <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;"><span class="confidence-badge cb-inferred">🔶 Inference</span> The connections below are researcher synthesis — research findings do not explicitly name FY27 deliverables.</p>
@@ -1155,7 +1143,7 @@
       <div class="gap-item" style="border-left:3px solid var(--green);"><div class="gap-icon">🔗</div><div><strong>Active Trust Signal Standard</strong> is the most strongly corroborated FY27 deliverable — demanded by BizTax insight synthesis on credential transparency and validated by Rebbeca (#54891) expressing expert continuity as a WTP driver.</div></div>
     </div>
   </div>
-
+ 
   <div class="hc-section">
     <div class="hc-title">📋 Source & Integrity Notes — Strategy Tab</div>
     <div class="hc-item"><span class="hc-label hc-sourced">📎 SOURCED</span> All statistics in this tab (1 in 5 BGS misrouted; 26% abandoners with no SE income; ~4.5M unattached sole props; $40B market) are from Intuit strategy documents and project instructions — NOT from the HeyMarvin or VOC Suite research analyzed in this brief. Do not mix these statistics with primary research citations.</div>
@@ -1163,16 +1151,16 @@
     <div class="hc-item"><span class="hc-label hc-inferred">🔶 INFERENCE</span> Research-to-deliverable mappings in the "How Research Maps to Strategy" section are researcher synthesis — the research does not explicitly name FY27 deliverables. The connections are directionally sound but should be validated with the product team before presenting as confirmed alignment.</div>
     <div style="margin-top:10px;font-size:11.5px;color:var(--text-light);">📊 <strong>Output Confidence: High for sourcing clarity.</strong> All strategic claims are clearly labeled as sourced from strategy docs. No strategic statistics are presented as primary research findings.</div>
   </div>
-
+ 
 </div>
-
+ 
 <!-- FOOTER -->
 <div class="brief-footer">
-  HeyMarvin pulled June 9–10, 2026 &nbsp;·&nbsp; Confirmed BizTax projects: #50577, #54075, #54891 + BizTax Insight synthesis · #55829 &amp; #49718 excluded (consumer) &nbsp;·&nbsp; VOC Suite: Jan–Jun 2026, 5 searches · ~2,500 records &nbsp;·&nbsp; External customers only &nbsp;·&nbsp; Synthesis by Claude / Cowork
+  HeyMarvin pulled June 9–10, 2026 &nbsp;·&nbsp; BizTax projects: #50577, #54075, #54891 + BizTax Insight synthesis &nbsp;·&nbsp; VOC Suite: Jan–Jun 2026, 5 searches · ~2,500 records &nbsp;·&nbsp; External customers only &nbsp;·&nbsp; Synthesis by Claude / Cowork
 </div>
-
+ 
 </div>
-
+ 
 <script>
 function switchMain(btn, panelId) {
   document.querySelectorAll('.main-tab').forEach(function(b){ b.classList.remove('mt-active'); });
