@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TY25 Find Phase Research Brief</title>
+<style>
+  :root {
+    --red: #D93025; --red-bg: #FFF0EE;
+    --orange: #E06D00; --orange-bg: #FFF5E6;
+    --green: #1A7A4A; --green-bg: #EAF7F0;
+    --blue: #1A5EAA; --blue-bg: #EEF4FC;
+    --purple: #7B2FA8; --purple-bg: #F3E8FF;
+    --gray: #5F6368; --gray-bg: #F8F9FA;
+    --border: #E0E0E0; --text: #202124; --text-light: #5F6368;
+    --quote-bg: #F1F6FF; --quote-border: #D2E3FC;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); color: var(--text); background: #F0F2F5; font-size: 14px; line-height: 1.6; }
+
+  /* Header */
+  .page-header { background: #1A1F36; color: white; padding: 28px 40px 24px; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid #3B5CDB; }
+  .page-header h1 { font-size: 19px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 5px; }
+  .page-header .meta { font-size: 11.5px; color: rgba(255,255,255,0.6); display: flex; gap: 18px; flex-wrap: wrap; }
+  .page-header .meta span::before { content: "•"; margin-right: 6px; opacity: 0.5; }
+  .page-header .meta span:first-child::before { display: none; }
+
+  /* Main tab nav */
+  .main-nav { background: white; border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; gap: 0; position: sticky; top: 81px; z-index: 99; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .main-tab { padding: 13px 20px; font-size: 13px; font-weight: 600; color: var(--text-light); background: none; border: none; border-bottom: 3px solid transparent; margin-bottom: -1px; cursor: pointer; font-family: var(--font); letter-spacing: 0.1px; transition: color 0.15s, border-color 0.15s; white-space: nowrap; }
+  .main-tab:hover { color: var(--blue); }
+  .main-tab.mt-active { color: var(--blue); border-bottom-color: var(--blue); }
+
+  .container { max-width: 980px; margin: 0 auto; padding: 28px 24px 80px; }
+  .main-panel { display: none; }
+  .main-panel.mp-active { display: block; }
+
+  /* Sub-nav (within HeyMarvin tab) */
+  .sub-nav { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 24px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .sub-nav a { padding: 6px 12px; font-size: 11.5px; font-weight: 600; color: var(--text-light); text-decoration: none; border-radius: 20px; border: 1px solid var(--border); background: white; transition: all 0.12s; }
+  .sub-nav a:hover { color: var(--blue); border-color: var(--blue); background: var(--blue-bg); }
+
+  /* Confidence notice */
+  .confidence-notice { display: flex; gap: 12px; align-items: flex-start; background: white; border: 1px solid var(--border); border-left: 4px solid var(--green); border-radius: 8px; padding: 12px 16px; font-size: 12px; margin-bottom: 22px; line-height: 1.55; }
+  .confidence-notice.warn { border-left-color: var(--orange); }
+  .confidence-notice .cn-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .confidence-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .cb-backed { background: #D4EDDA; color: #1A7A4A; }
+  .cb-sourced { background: #D2E3FC; color: #1A5EAA; }
+  .cb-inferred { background: #FFF5E6; color: #B06000; }
+  .cb-assumed { background: #FFF0EE; color: #C0392B; }
+
+  /* Sections */
+  .section { margin-bottom: 34px; }
+  .section-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 14px; padding-bottom: 9px; border-bottom: 2px solid var(--border); display: flex; align-items: center; gap: 10px; }
+
+  /* Sources grid */
+  .source-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 12px; }
+  .source-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start; }
+  .project-id { font-size: 11px; font-weight: 800; color: white; background: #1A1F36; border-radius: 5px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0; font-family: monospace; }
+  .project-name { font-weight: 700; font-size: 13px; }
+  .project-meta { font-size: 11.5px; color: var(--text-light); margin-top: 2px; }
+
+  /* Finding cards */
+  .finding-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
+  .finding-card h4 { font-size: 14px; font-weight: 700; margin: 6px 0 8px; }
+  .finding-card p { font-size: 13px; line-height: 1.6; color: var(--text); margin-bottom: 10px; }
+  .finding-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-right: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .finding-tag.critical { background: var(--red-bg); color: var(--red); }
+  .finding-tag.high { background: var(--orange-bg); color: var(--orange); }
+  .finding-tag.medium { background: #FFF9E6; color: #B06000; }
+  .finding-tag.opportunity { background: var(--green-bg); color: var(--green); }
+  .prob-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-right: 4px; text-transform: uppercase; letter-spacing: 0.3px; white-space: nowrap; }
+  .prob-tag.brand { background: #F3E8FF; color: #7B2FA8; }
+  .prob-tag.credibility { background: #E8F0FF; color: #1A5EAA; }
+  .prob-tag.wayfinding { background: #FFF0EE; color: #C0392B; }
+  .prob-tag.qbtt { background: #E6F7F0; color: #1A6B45; }
+
+  /* Quote cards */
+  .quote-card { background: var(--quote-bg); border: 1px solid var(--quote-border); border-left: 3px solid var(--blue); border-radius: 8px; padding: 12px 14px; margin-top: 10px; }
+  .quote-card blockquote { font-style: italic; font-size: 13px; line-height: 1.6; margin-bottom: 8px; }
+  .attribution { display: flex; gap: 6px; flex-wrap: wrap; }
+  .persona-chip { font-size: 10.5px; font-weight: 600; background: white; border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
+  .source-chip { font-size: 10.5px; font-weight: 600; background: #1A1F36; color: rgba(255,255,255,0.85); border-radius: 4px; padding: 2px 7px; font-family: monospace; }
+
+  /* Theme blocks */
+  .theme-block { background: white; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
+  .theme-header { padding: 10px 16px; font-size: 13px; font-weight: 700; }
+  .theme-header.red { background: var(--red-bg); color: var(--red); }
+  .theme-header.orange { background: var(--orange-bg); color: var(--orange); }
+  .theme-header.green { background: var(--green-bg); color: var(--green); }
+  .theme-body { padding: 14px 16px; }
+  .bullet-list { padding-left: 18px; display: flex; flex-direction: column; gap: 7px; font-size: 13px; }
+  .bullet-list li { line-height: 1.55; }
+
+  /* Needs grid */
+  .needs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .needs-col { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .needs-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; padding-bottom: 7px; border-bottom: 2px solid var(--border); }
+  .needs-col.functional h4 { color: var(--blue); border-bottom-color: #D2E3FC; }
+  .needs-col.emotional h4 { color: var(--green); border-bottom-color: #C3EBD8; }
+  .need-item { display: flex; gap: 8px; margin-bottom: 9px; font-size: 13px; line-height: 1.5; }
+  .need-item:last-child { margin-bottom: 0; }
+  .need-item .dot { font-size: 15px; flex-shrink: 0; margin-top: -1px; }
+
+  /* Summary table */
+  .summary-table { width: 100%; border-collapse: collapse; font-size: 12.5px; background: white; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+  .summary-table th { background: #1A1F36; color: rgba(255,255,255,0.85); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 14px; text-align: left; white-space: nowrap; }
+  .summary-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .summary-table tr:last-child td { border-bottom: none; }
+  .summary-table tr:hover td { background: var(--gray-bg); }
+  .sev-dot { display: inline-flex; align-items: center; gap: 5px; font-weight: 700; font-size: 11px; white-space: nowrap; }
+  .sev-dot.critical { color: var(--red); }
+  .sev-dot.high { color: var(--orange); }
+  .sev-dot.opportunity { color: var(--green); }
+  .sev-dot.medium { color: #B06000; }
+  .sev-dot::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .sev-dot.critical::before { background: var(--red); }
+  .sev-dot.high::before { background: var(--orange); }
+  .sev-dot.opportunity::before { background: var(--green); }
+  .sev-dot.medium::before { background: #B06000; }
+  .proj-badge { font-size: 10px; background: var(--gray-bg); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; color: var(--text-light); font-weight: 600; white-space: nowrap; font-family: monospace; }
+
+  /* Gap list */
+  .gap-list { display: flex; flex-direction: column; gap: 8px; }
+  .gap-item { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-size: 13px; display: flex; gap: 10px; align-items: flex-start; }
+  .gap-item .gap-icon { font-size: 16px; margin-top: 1px; flex-shrink: 0; }
+
+  /* Hallucination check section */
+  .hc-section { background: #FFFDF0; border: 1px solid #F0D800; border-left: 4px solid #C0A000; border-radius: 8px; padding: 16px 18px; margin-top: 28px; }
+  .hc-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #7A6000; margin-bottom: 12px; }
+  .hc-item { font-size: 12px; margin-bottom: 10px; line-height: 1.55; }
+  .hc-item:last-child { margin-bottom: 0; }
+  .hc-label { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 4px; margin-right: 6px; }
+  .hc-backed { background: #D4EDDA; color: #1A7A4A; }
+  .hc-sourced { background: #D2E3FC; color: #1A5EAA; }
+  .hc-inferred { background: #FFF5E6; color: #B06000; }
+  .hc-assumed { background: #FFF0EE; color: #C0392B; }
+
+  /* VOC sub-tabs */
+  .voc-subnav { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 18px; border-bottom: 2px solid var(--border); padding-bottom: 0; }
+  .voc-subtab { padding: 9px 14px; font-size: 12px; font-weight: 600; color: var(--text-light); background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; cursor: pointer; white-space: nowrap; transition: color 0.15s, border-color 0.15s; font-family: var(--font); }
+  .voc-subtab:hover { color: var(--blue); }
+  .voc-subtab.vst-active { color: var(--blue); border-bottom-color: var(--blue); }
+  .voc-panel { display: none; }
+  .voc-panel.vp-active { display: block; }
+  .voc-tab-info { display: flex; align-items: flex-start; gap: 12px; background: var(--gray-bg); border: 1px solid var(--border); border-radius: 8px; padding: 13px 16px; margin-bottom: 14px; }
+  .voc-tab-num { width: 26px; height: 26px; border-radius: 50%; background: #1A1F36; color: white; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .voc-tab-meta { flex: 1; }
+  .voc-tab-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .voc-tab-query { font-size: 10.5px; color: var(--text-light); background: white; border: 1px solid var(--border); border-radius: 4px; padding: 3px 8px; display: inline-block; font-family: monospace; }
+  .voc-tab-count { font-size: 11px; color: var(--text-light); margin-top: 5px; }
+  .voc-themes { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 13px 16px; margin-bottom: 14px; font-size: 12.5px; }
+  .voc-themes-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-light); margin-bottom: 8px; }
+  .voc-themes ul { padding-left: 18px; display: flex; flex-direction: column; gap: 5px; }
+  .voc-themes li { line-height: 1.5; }
+  .voc-signal-cards { display: flex; flex-direction: column; gap: 10px; }
+  .voc-signal { background: white; border: 1px solid var(--border); border-left: 3px solid var(--border); border-radius: 8px; padding: 12px 14px; font-size: 12.5px; line-height: 1.55; }
+  .voc-signal.brand-signal { border-left-color: #7B2FA8; }
+  .voc-signal.credibility-signal { border-left-color: var(--blue); }
+  .voc-signal.wayfinding-signal { border-left-color: var(--red); }
+  .voc-signal.price-signal { border-left-color: var(--orange); }
+  .voc-signal.qbtt-signal { border-left-color: #1A6B45; }
+  .voc-signal .signal-id { font-size: 10px; font-weight: 700; color: var(--text-light); text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.4px; }
+  .voc-signal blockquote { font-style: italic; color: var(--text); margin: 4px 0 7px; }
+  .voc-signal .signal-note { font-size: 11.5px; color: var(--text-light); margin-top: 5px; }
+  .backtrack-table { width: 100%; border-collapse: collapse; font-size: 12px; background: white; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+  .backtrack-table th { background: #1A1F36; color: rgba(255,255,255,0.85); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 12px; text-align: left; white-space: nowrap; }
+  .backtrack-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.45; }
+  .backtrack-table tr:last-child td { border-bottom: none; }
+  .backtrack-table tr:hover td { background: var(--gray-bg); }
+  .backtrack-table .rec-id { font-family: monospace; font-weight: 700; color: var(--text-light); white-space: nowrap; }
+  .backtrack-table .tab-src { font-size: 10px; font-weight: 600; background: var(--gray-bg); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; white-space: nowrap; display: inline-block; }
+  .backtrack-table .sq { font-size: 10.5px; font-family: monospace; color: var(--text-light); }
+
+  /* Strategy tab */
+  .strategy-notice { background: #FFF5E6; border: 1px solid #FFD080; border-left: 4px solid var(--orange); border-radius: 8px; padding: 13px 16px; font-size: 12.5px; line-height: 1.6; margin-bottom: 22px; }
+  .strategy-section { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 14px; }
+  .strategy-section h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+  .framing-box { background: #1A1F36; color: white; border-radius: 10px; padding: 20px; margin-bottom: 14px; }
+  .framing-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: rgba(255,255,255,0.5); margin-bottom: 7px; }
+  .vision-quote { font-size: 13px; line-height: 1.65; color: rgba(255,255,255,0.88); font-style: italic; border-left: 3px solid #3B5CDB; padding-left: 14px; margin-bottom: 18px; }
+  .problem-chips { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .problem-chip { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 12px 14px; }
+  .chip-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .chip-label.brand { color: #C084FC; }
+  .chip-label.credibility { color: #93C5FD; }
+  .chip-label.wayfinding { color: #FCA5A5; }
+  .chip-label.qbtt { color: #6EE7B7; }
+  .chip-desc { font-size: 11.5px; color: rgba(255,255,255,0.72); line-height: 1.5; }
+  .chip-source { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 6px; font-style: italic; }
+  .goal-banner { background: linear-gradient(135deg, #1E3A5F, #1A4A32); border-radius: 8px; padding: 14px 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 14px; border: 1px solid rgba(255,255,255,0.08); }
+  .goal-banner .goal-icon { font-size: 22px; flex-shrink: 0; }
+  .goal-banner .goal-text { font-size: 13px; color: white; line-height: 1.5; }
+  .goal-banner .goal-text strong { color: #93C5FD; }
+  .deliverable-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .deliverable-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 13px 14px; font-size: 12.5px; }
+  .deliverable-card .d-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 5px; }
+  .deliverable-card .d-label.cx { color: var(--blue); }
+  .deliverable-card .d-label.product { color: var(--purple); }
+
+  /* Footer */
+  .brief-footer { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-light); text-align: center; }
+
+  @media (max-width: 720px) {
+    .source-grid, .needs-grid, .problem-chips, .deliverable-grid { grid-template-columns: 1fr; }
+    .page-header { padding: 18px 20px; }
+    .main-nav { top: 70px; padding: 0 16px; }
+    .container { padding: 18px 14px 60px; }
+    .main-tab { padding: 10px 12px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>BizTax Find Phase — TY25 Research Brief</h1>
+  <div class="meta">
+    <span>External customers only</span>
+    <span>Jan – Jun 2026</span>
+    <span>HeyMarvin: 4 projects · N≈50 sessions · VOC Suite: 5 searches · ~2,500 records</span>
+    <span>Pulled June 9, 2026</span>
+  </div>
+</div>
+
+<nav class="main-nav">
+  <button class="main-tab mt-active" onclick="switchMain(this,'tab-overview')">⚡ Key Findings</button>
+  <button class="main-tab" onclick="switchMain(this,'tab-hm')">🔬 HeyMarvin Research</button>
+  <button class="main-tab" onclick="switchMain(this,'tab-voc')">🗣️ VOC Suite Research</button>
+  <button class="main-tab" onclick="switchMain(this,'tab-strategy')">🧭 Find Phase Strategy</button>
+</nav>
+
+<div class="container">
+
+<!-- ====================================================
+     TAB 0: KEY FINDINGS OVERVIEW
+     ==================================================== -->
+<div id="tab-overview" class="main-panel mp-active">
+
+  <div style="display:flex;align-items:flex-start;gap:14px;background:white;border:1px solid var(--border);border-left:4px solid #3B5CDB;border-radius:8px;padding:13px 16px;font-size:12.5px;margin-bottom:22px;line-height:1.6;">
+    <div style="font-size:16px;flex-shrink:0;">📌</div>
+    <div>Top findings across all TY25 research — HeyMarvin (4 projects, N≈50 external customers) and Intuit VOC Suite (5 semantic searches, ~2,500 contact center records). Each finding is linked to at least one direct source. <strong>For full evidence, see the HeyMarvin and VOC tabs.</strong></div>
+  </div>
+
+  <!-- FINDING 1 -->
+  <div class="finding-card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div style="width:26px;height:26px;border-radius:50%;background:#D93025;color:white;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+      <span class="finding-tag critical">🔴 Critical</span>
+      <span class="prob-tag qbtt">④ QB/TT Gap</span>
+      <span class="prob-tag wayfinding">③ Wayfinding</span>
+    </div>
+    <h4>QuickBooks drops business owners into the wrong product — and they don't know it</h4>
+    <p>Clicking "TurboTax" inside a QB business account routes customers to personal TurboTax / Schedule C, not TurboTax Business. Customers invest significant time before discovering they've been in the wrong product — or never discover it at all. One participant was unable to file for multiple years because of this routing failure.</p>
+    <div class="quote-card">
+      <blockquote>"It seemed like there would be a reasonable expectation it would take me to a business TurboTax software...but it returned me to where I had already started."</blockquote>
+      <div class="attribution"><span class="persona-chip">Marnie W. · LLC/Partnership</span><span class="source-chip">HeyMarvin #50577</span></div>
+    </div>
+    <div class="quote-card" style="margin-top:8px;">
+      <blockquote>"Started automotive repair LLC, clicked 'start taxes' in QuickBooks — immediately unsure how data would transfer between the systems."</blockquote>
+      <div class="attribution"><span class="persona-chip">QB LLC Owner</span><span class="source-chip">VOC Suite Tab 4 · Rec #356</span></div>
+    </div>
+  </div>
+
+  <!-- FINDING 2 -->
+  <div class="finding-card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div style="width:26px;height:26px;border-radius:50%;background:#D93025;color:white;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+      <span class="finding-tag critical">🔴 Critical</span>
+      <span class="prob-tag wayfinding">③ Wayfinding</span>
+    </div>
+    <h4>Business tax is invisible to unauthenticated visitors — the entire consideration stage is cut off</h4>
+    <p>The TurboTax homepage shows only "Start for Free" and "Sign In" to unauthenticated users. There is no visible path to business tax without logging in first. Customers evaluating TurboTax as an option — the core Find Phase moment — hit a dead end before they can even assess fit.</p>
+    <div class="quote-card">
+      <blockquote>"I'm on the web page without signing in — up at the top it says 'start for free' or 'sign in.' I don't see a place where it says business taxes."</blockquote>
+      <div class="attribution"><span class="persona-chip">Business Tax Customer</span><span class="source-chip">VOC Suite Tab 4 · Rec #12</span></div>
+    </div>
+    <div class="quote-card" style="margin-top:8px;">
+      <blockquote>"I literally got stuck on the first page where it says 'where should we start today?' — expressing embarrassment about not being able to begin their business taxes."</blockquote>
+      <div class="attribution"><span class="persona-chip">Business Tax Customer</span><span class="source-chip">VOC Suite Tab 4 · Rec #204</span></div>
+    </div>
+  </div>
+
+  <!-- FINDING 3 -->
+  <div class="finding-card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div style="width:26px;height:26px;border-radius:50%;background:#D93025;color:white;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+      <span class="finding-tag critical">🔴 Critical</span>
+      <span class="prob-tag brand">① Brand</span>
+    </div>
+    <h4>TurboTax isn't in the consideration set — customers don't believe it does serious business tax</h4>
+    <p>Across HeyMarvin sessions and VOC contact center records, BGS customers arrive already anchored to H&R Block, local CPAs, or other tools. The TurboTax brand reads as consumer/DIY — not as a credible expert-led service for LLCs, S-Corps, or Partnerships. When customers do call in to ask, the answer often confirms their doubt.</p>
+    <div class="quote-card">
+      <blockquote>"I'll deal with the devil I'm used to."</blockquote>
+      <div class="attribution"><span class="persona-chip">Tahera C. · SMLLC</span><span class="source-chip">HeyMarvin #50577 — on staying with H&R Block</span></div>
+    </div>
+    <div class="quote-card" style="margin-top:8px;">
+      <blockquote>"Customer asks if TurboTax offers business tax services — told only virtual expert options, not in-person. Responds: 'never mind.'"</blockquote>
+      <div class="attribution"><span class="persona-chip">Business Customer</span><span class="source-chip">VOC Suite Tab 1 · Rec #206</span></div>
+    </div>
+  </div>
+
+  <!-- FINDING 4 -->
+  <div class="finding-card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div style="width:26px;height:26px;border-radius:50%;background:#D93025;color:white;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+      <span class="finding-tag critical">🔴 Critical</span>
+      <span class="prob-tag credibility">② Expert Credibility</span>
+    </div>
+    <h4>Customers can't see expert credentials before matching — and won't commit without them</h4>
+    <p>The expert matching system shows only years of experience and Intuit course completions. No CPA/EA designation, no industry specialization, no prior business type experience. Customers — especially those with complex entities — won't book without knowing who they're getting. This is a display problem, not an expertise problem.</p>
+    <div class="quote-card">
+      <blockquote>"I wanna see their credentials and then I will decide whether I wanna meet with that person or not."</blockquote>
+      <div class="attribution"><span class="persona-chip">BizTax Customer</span><span class="source-chip">VOC Suite Tab 3 · Rec #3</span></div>
+    </div>
+    <div class="quote-card" style="margin-top:8px;">
+      <blockquote>"The web interface fails to display professional qualifications, specialty areas, or experience indicators such as international tax or expat filing capabilities."</blockquote>
+      <div class="attribution"><span class="persona-chip">BizTax Customer</span><span class="source-chip">VOC Suite Tab 3 · Rec #18</span></div>
+    </div>
+  </div>
+
+  <!-- FINDING 5 -->
+  <div class="finding-card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div style="width:26px;height:26px;border-radius:50%;background:#D93025;color:white;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</div>
+      <span class="finding-tag critical">🔴 Critical</span>
+      <span class="prob-tag credibility">② Expert Credibility</span>
+    </div>
+    <h4>Customers can't tell if they're talking to AI or a human expert — and it's killing consideration</h4>
+    <p>The distinction between Intuit Assist (AI) and Expert Help (human) is not legible to customers. This ambiguity doesn't just cause confusion — it devalues the expert offer before interaction starts. Multiple VOC records show customers who assumed they'd already talked to a human and received AI responses.</p>
+    <div class="quote-card">
+      <blockquote>"I'm assuming Intuit Assist is some kind of AI agent platform and Expert Help actually would get you a human, but...unsure."</blockquote>
+      <div class="attribution"><span class="persona-chip">Pearson W. · Sole Prop</span><span class="source-chip">HeyMarvin #50577</span></div>
+    </div>
+    <div class="quote-card" style="margin-top:8px;">
+      <blockquote>"Tax Expert feature appears to use AI-generated responses rather than genuine expert knowledge."</blockquote>
+      <div class="attribution"><span class="persona-chip">BizTax Customer</span><span class="source-chip">VOC Suite Tab 3 · Rec #26</span></div>
+    </div>
+  </div>
+
+  <!-- FINDING 6 -->
+  <div class="finding-card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div style="width:26px;height:26px;border-radius:50%;background:#D93025;color:white;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">6</div>
+      <span class="finding-tag critical">🔴 Critical</span>
+      <span class="prob-tag brand">① Brand</span>
+    </div>
+    <h4>Price is revealed mid-flow, not upfront — customers feel trapped or deceived</h4>
+    <p>Business tax pricing by entity type is not visible at discovery. Customers invest 30–60 minutes before hitting a price that can be 3–5× higher than they expected based on the landing page offer. This pattern appeared across multiple VOC records and at least one HeyMarvin session. It reads as a commitment trap, not a complexity explanation.</p>
+    <div class="quote-card">
+      <blockquote>"Business tax section displayed a $150 offer for expert filing — but after starting the process, a price preview showed over $775."</blockquote>
+      <div class="attribution"><span class="persona-chip">BizTax Customer</span><span class="source-chip">VOC Suite Tab 5 · Rec #211</span></div>
+    </div>
+    <div class="quote-card" style="margin-top:8px;">
+      <blockquote>"Let an expert file your taxes for only $150 only applies to sole proprietors...for $399 we may be able to...It's better than $1,200."</blockquote>
+      <div class="attribution"><span class="persona-chip">Marnie W. · LLC/Partnership</span><span class="source-chip">HeyMarvin #50577</span></div>
+    </div>
+  </div>
+
+  <!-- FINDING 7 -->
+  <div class="finding-card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div style="width:26px;height:26px;border-radius:50%;background:#E06D00;color:white;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">7</div>
+      <span class="finding-tag high">🟠 High</span>
+      <span class="prob-tag wayfinding">③ Wayfinding</span>
+    </div>
+    <h4>Entity type is never confirmed at entry — LLCs and S-Corps discover the wrong product mid-session</h4>
+    <p>There is no front-door guard rail that confirms whether a customer's entity type is supported or routes them to the correct product. Customers who are LLCs, S-Corps, or Partnerships frequently begin a sole proprietor flow and only realize the mismatch after significant time investment — often during a live call with an agent.</p>
+    <div class="quote-card">
+      <blockquote>"My only concern as it says it's for sole proprietorship and we're considered an LLC."</blockquote>
+      <div class="attribution"><span class="persona-chip">LLC Customer</span><span class="source-chip">HeyMarvin #50577</span></div>
+    </div>
+    <div class="quote-card" style="margin-top:8px;">
+      <blockquote>"Single-member LLC customer learns mid-call she should file as an individual on Schedule C — not the business product. Appointment cancelled; must start over."</blockquote>
+      <div class="attribution"><span class="persona-chip">Single-member LLC</span><span class="source-chip">VOC Suite Tab 1 · Rec #139</span></div>
+    </div>
+  </div>
+
+  <!-- FINDING 8 -->
+  <div class="finding-card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div style="width:26px;height:26px;border-radius:50%;background:#E06D00;color:white;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">8</div>
+      <span class="finding-tag high">🟠 High</span>
+      <span class="prob-tag brand">① Brand</span>
+    </div>
+    <h4>The landing page creates a trust deficit before any expert interaction happens</h4>
+    <p>Contact center records show customers describing the TurboTax business landing page as "shady," "aggressive," and confusing before reaching a single product screen. The interrogation-first navigation model (answering questions before seeing value) blocks the exploration behavior that drives consideration.</p>
+    <div class="quote-card">
+      <blockquote>"TurboTax's landing pages use aggressive marketing tactics that artificially inflate pricing. Customer describes the experience as 'shady' and untrustworthy."</blockquote>
+      <div class="attribution"><span class="persona-chip">BizTax Customer</span><span class="source-chip">VOC Suite Tab 2 · Rec #3</span></div>
+    </div>
+    <div class="quote-card" style="margin-top:8px;">
+      <blockquote>"Your landing page sucks asking me to answer questions instead of giving me the option to navigate to what I need."</blockquote>
+      <div class="attribution"><span class="persona-chip">BizTax Customer</span><span class="source-chip">VOC Suite Tab 2 · Rec #18</span></div>
+    </div>
+  </div>
+
+  <!-- FINDING 9 -->
+  <div class="finding-card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div style="width:26px;height:26px;border-radius:50%;background:#E06D00;color:white;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">9</div>
+      <span class="finding-tag high">🟠 High</span>
+      <span class="prob-tag qbtt">④ QB/TT Gap</span>
+    </div>
+    <h4>QB data doesn't transfer cleanly — customers find accuracy gaps they can't trust</h4>
+    <p>Even when customers successfully navigate to TurboTax Business via QuickBooks, the data integration fails. Chart of accounts categories don't map correctly, imports are slower than manual entry, and customers who cross-check TurboTax against other tools find discrepancies they can't explain. One participant found a ~$20k variance.</p>
+    <div class="quote-card">
+      <blockquote>"My biggest issue was aligning the categories within the chart of accounts with the categories that TurboTax wanted them in. And that transition was never a clean conversation."</blockquote>
+      <div class="attribution"><span class="persona-chip">April · S-Corp, Construction, $2.8M revenue</span><span class="source-chip">HeyMarvin #54075</span></div>
+    </div>
+    <div class="quote-card" style="margin-top:8px;">
+      <blockquote>"I'm just looking forward to finding another accounting software that has a good relationship with tax software. So that works well together."</blockquote>
+      <div class="attribution"><span class="persona-chip">Churner · IT Services, ~$10–12M</span><span class="source-chip">HeyMarvin #54075</span></div>
+    </div>
+  </div>
+
+  <!-- FINDING 10 -->
+  <div class="finding-card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div style="width:26px;height:26px;border-radius:50%;background:#1A7A4A;color:white;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">10</div>
+      <span class="finding-tag opportunity">🟢 Opportunity</span>
+      <span class="prob-tag credibility">② Expert Credibility</span>
+    </div>
+    <h4>When the expert experience works, it creates the strongest retention and WTP signal in the research</h4>
+    <p>Customers who had a great expert interaction express strong willingness to pay for continuity — same expert, year over year. This is the highest-confidence positive signal in TY25 research and the clearest indication of what the upside looks like when Find Phase problems are solved.</p>
+    <div class="quote-card" style="border-left-color:#1A7A4A;background:#EAF7F0;">
+      <blockquote style="color:#1A5C3A;">"If I could work with that same person every single year, guaranteed, I would probably pay the fee just to have that peace of mind. It was such an amazing experience."</blockquote>
+      <div class="attribution"><span class="persona-chip">DIWM Customer</span><span class="source-chip">HeyMarvin #49718 — Chase Williams session</span></div>
+    </div>
+    <div class="quote-card" style="margin-top:8px;border-left-color:#1A7A4A;background:#EAF7F0;">
+      <blockquote style="color:#1A5C3A;">"Everyone that I've spoken to has been very formal, very polite, and knowledgeable, and also quick. I think that's probably the most important thing."</blockquote>
+      <div class="attribution"><span class="persona-chip">Jake T.</span><span class="source-chip">HeyMarvin #49718</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ====================================================
+     TAB 1: HEYMARVIN RESEARCH
+     ==================================================== -->
+<div id="tab-hm" class="main-panel">
+
+  <div class="confidence-notice">
+    <div class="cn-icon">✅</div>
+    <div><span class="confidence-badge cb-backed">Data-Backed</span> All findings in this tab are sourced from external customer HeyMarvin sessions (FMHs, interviews). Every claim includes a named participant or session source. Qualitative only — no tNPS or funnel metrics. <strong>Where summaries go beyond a single quoted participant, this is flagged inline.</strong></div>
+  </div>
+
+  <div class="sub-nav">
+    <a href="#hm-sources">📁 Sources</a>
+    <a href="#hm-findings">🔍 Top Findings</a>
+    <a href="#hm-themes">🚨 Pain Point Themes</a>
+    <a href="#hm-needs">🎯 Needs & Wants</a>
+    <a href="#hm-barriers">🚧 Find Phase Barriers</a>
+    <a href="#hm-summary">📊 Summary Table</a>
+    <a href="#hm-quotes">💬 Direct Quotes Bank</a>
+    <a href="#hm-gaps">🔍 Gaps</a>
+  </div>
+
+  <!-- SOURCES -->
+  <div id="hm-sources" class="section">
+    <div class="section-title"><span>📁</span> HeyMarvin Sources</div>
+    <div class="source-grid">
+      <div class="source-card">
+        <div class="project-id">#50577</div>
+        <div>
+          <div class="project-name">TY25 BT E2E FMHs</div>
+          <div class="project-meta">N=20 live filing FMHs · Feb–Apr 2026</div>
+        </div>
+      </div>
+      <div class="source-card">
+        <div class="project-id">#54075</div>
+        <div>
+          <div class="project-name">Biz Tax TY25 QBO Filing FMHs</div>
+          <div class="project-meta">N=7 FMHs + churner interviews · Mar–May 2026</div>
+        </div>
+      </div>
+      <div class="source-card">
+        <div class="project-id">#49718</div>
+        <div>
+          <div class="project-name">TY25 DIWM FMHs</div>
+          <div class="project-meta">N=17 FMHs · Feb–Apr 2026</div>
+        </div>
+      </div>
+      <div class="source-card">
+        <div class="project-id">#55829</div>
+        <div>
+          <div class="project-name">DIWM Abandonment April 2026</div>
+          <div class="project-meta">N=6 abandonment interviews · April 2026</div>
+        </div>
+      </div>
+    </div>
+    <div class="gap-item" style="background:#FFF9E6;border-color:#FFE0A3;margin-top:8px;">
+      <div class="gap-icon">⛔</div>
+      <div><strong>Excluded:</strong> Signal VOC Suite TY25 2nd peak (#57771) — internal Signal ops retrospectives and CX analyst focus groups only. No external customer sessions found.</div>
+    </div>
+  </div>
+
+  <!-- TOP FINDINGS -->
+  <div id="hm-findings" class="section">
+    <div class="section-title"><span>🔍</span> Top Findings — Find Phase Signals</div>
+
+    <div class="finding-card">
+      <span class="finding-tag critical">🔴 Critical</span> <span class="prob-tag wayfinding">③ Wayfinding</span> <span class="prob-tag qbtt">④ QB/TT Gap</span>
+      <h4>QB Routes Customers to the Wrong Product</h4>
+      <p>The single most critical Find Phase failure this season: clicking the TurboTax button inside a QB business account drops users into personal TurboTax / Schedule C — not TurboTax Business. Marnie W. (LLC/Partnership) was stuck for multiple filing years because of this and was only unblocked when an expert told her to clear her return and restart.</p>
+      <div class="quote-card">
+        <blockquote>"It seemed like there would be a reasonable expectation it would take me to a business TurboTax software...but it returned me to where I had already started."</blockquote>
+        <div class="attribution"><span class="persona-chip">Marnie W. · LLC/Partnership</span><span class="source-chip">TY25 BT E2E FMHs #50577</span></div>
+      </div>
+    </div>
+
+    <div class="finding-card">
+      <span class="finding-tag critical">🔴 Critical</span> <span class="prob-tag credibility">② Expert Credibility</span>
+      <h4>Customers Can't Tell AI from Human Expert</h4>
+      <p>Customers cannot distinguish Intuit Assist (AI) from Expert Help (human). This ambiguity devalues the expert before interaction starts.</p>
+      <div class="quote-card">
+        <blockquote>"I'm assuming Intuit Assist is some kind of AI agent platform and Expert Help actually would get you a human, but...unsure."</blockquote>
+        <div class="attribution"><span class="persona-chip">Pearson W. · Sole Prop</span><span class="source-chip">TY25 BT E2E FMHs #50577</span></div>
+      </div>
+    </div>
+
+    <div class="finding-card">
+      <span class="finding-tag critical">🔴 Critical</span> <span class="prob-tag credibility">② Expert Credibility</span>
+      <h4>"Tax Advisor" Title Dismissed — Customers Want CPA Credentials</h4>
+      <p>Customers with complex situations (LLC, household employees) reject generic credentials. They want CPA certification specifically, or explicit situational expertise. Maria D. explicitly said she wouldn't call an expert unless she was sure they'd handled her situation before.</p>
+      <div class="quote-card">
+        <blockquote>"If I knew the expert I was talking to was a CPA, I'd feel more confident. If they're a tax advisor... what the hell does that even mean?"</blockquote>
+        <div class="attribution"><span class="persona-chip">Maria D. · High-income, nanny employer</span><span class="source-chip">DIWM Abandonment #55829</span></div>
+      </div>
+      <div class="quote-card">
+        <blockquote>"If they specifically called that out, like, 'Do you need expert help because you have a household employee?' we're prepared for that."</blockquote>
+        <div class="attribution"><span class="persona-chip">Maria D.</span><span class="source-chip">DIWM Abandonment #55829</span></div>
+      </div>
+    </div>
+
+    <div class="finding-card">
+      <span class="finding-tag critical">🔴 Critical</span> <span class="prob-tag wayfinding">③ Wayfinding</span> <span class="prob-tag brand">① Brand</span>
+      <h4>Pricing by Entity Type Hidden Until Mid-Session</h4>
+      <p>The difference between entity types (e.g., $150 for Sole Prop vs. $399 for LLC/Partnership) is not surfaced at consideration. Customers discover it mid-flow after investing time. Source: Marnie W. quote; the price points listed reflect what she verbalized — not a systemic audit across the full N.</p>
+      <div class="quote-card">
+        <blockquote>"Let an expert file your taxes for only $150 only applies to sole proprietors...for $399 we may be able to...It's better than $1,200."</blockquote>
+        <div class="attribution"><span class="persona-chip">Marnie W. · LLC/Partnership</span><span class="source-chip">TY25 BT E2E FMHs #50577</span></div>
+      </div>
+    </div>
+
+    <div class="finding-card">
+      <span class="finding-tag critical">🔴 Critical</span> <span class="prob-tag wayfinding">③ Wayfinding</span> <span class="prob-tag brand">① Brand</span>
+      <h4>Auto-Enrollment in Paid Expert Flow → Churn to IRS Free File</h4>
+      <p>Susan H. was silently routed into a paid expert experience without a clear selection. She only saw the invoice (~$130–150) at submission, re-filed on IRS Free File for free, got the same refund, and will not return. Researcher noted similar reports; only Susan H. is directly quoted here.</p>
+      <div class="quote-card">
+        <blockquote>"I wasn't aware of that at all... that's why I was so shocked... when I saw the amount of the invoice."</blockquote>
+        <div class="attribution"><span class="persona-chip">Susan H. · Long-time DIY user</span><span class="source-chip">DIWM Abandonment #55829</span></div>
+      </div>
+    </div>
+
+    <div class="finding-card">
+      <span class="finding-tag opportunity">🟢 Opportunity</span> <span class="prob-tag credibility">② Expert Credibility</span>
+      <h4>Expert Continuity Is the Strongest WTP Signal in This Corpus</h4>
+      <p>Customers who had a great expert want year-over-year continuity — and say they'd pay for it. This is the highest-confidence positive signal across the research. Sourced from #49718 (Chase Williams session).</p>
+      <div class="quote-card" style="border-left-color:#1A7A4A;background:#EAF7F0;">
+        <blockquote style="color:#1A5C3A;">"If I could work with that same person every single year, guaranteed, I would probably pay the fee just to have that peace of mind. It was such an amazing experience."</blockquote>
+        <div class="attribution"><span class="persona-chip">DIWM Customer</span><span class="source-chip">TY25 DIWM FMHs #49718 — Chase Williams session</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAIN POINT THEMES -->
+  <div id="hm-themes" class="section">
+    <div class="section-title"><span>🚨</span> Pain Point Themes <span style="font-size:11px;font-weight:400;color:var(--text-light);margin-left:6px;">— Synthesized across N≈50 sessions · <span class="confidence-badge cb-inferred" style="margin-left:4px;">Synthesized</span></span></div>
+    <div class="confidence-notice warn" style="margin-bottom:14px;">
+      <div class="cn-icon">🔶</div>
+      <div>These themes are synthesized from patterns across sessions. Each theme is grounded in at least one direct quote (see Quotes Bank), but themes represent a researcher interpretation — not a count or frequency analysis. No tNPS or funnel data is available to quantify volume.</div>
+    </div>
+
+    <div class="theme-block">
+      <div class="theme-header red">🗺️ Navigating to the Right Product</div>
+      <div class="theme-body">
+        <ul class="bullet-list">
+          <li>Clicking TurboTax from inside a QB business account drops customers into personal TT / Schedule C — not TurboTax Business</li>
+          <li>No in-product confirmation of correct workflow for entity type (LLC, S-Corp, Partnership)</li>
+          <li>Pricing by entity type not visible at consideration — customers discover a $150–$399 gap mid-session</li>
+          <li>Brand inertia (H&R Block, CPAs) not overcome by the QB integration because the integration experience itself is broken</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="theme-block">
+      <div class="theme-header red">🤷 Expert Credibility at the Front Door</div>
+      <div class="theme-body">
+        <ul class="bullet-list">
+          <li>Customers cannot tell Intuit Assist (AI) from Expert Help (human) — ambiguity devalues the expert before interaction starts</li>
+          <li>"Tax advisor" credentials dismissed as marketing by customers with complex situations — CPA or situational match required</li>
+          <li>Customers who've had one bad expert interaction won't try again without upfront credibility signals</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="theme-block">
+      <div class="theme-header red">💸 Pricing and Service Level Confusion</div>
+      <div class="theme-body">
+        <ul class="bullet-list">
+          <li>Customers silently auto-enrolled into paid expert experiences — invoice revealed only at submission</li>
+          <li>S-Corp bundle pricing ambiguous: customers can't determine if the $400+ tier covers the business return or is a surcharge</li>
+          <li>Aggressive "chat now / live help" prompts appear before problems exist, signaling distrust of DIY ability</li>
+          <li>Long-time users who qualify for free filing are not told — find out from friends</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="theme-block">
+      <div class="theme-header orange">🔗 QuickBooks Integration Failures</div>
+      <div class="theme-body">
+        <ul class="bullet-list">
+          <li>QB Desktop chart of accounts names don't match TurboTax categories — creating tax outcome variances. One participant found ~$20k discrepancy (April, S-Corp, Construction, #54075)</li>
+          <li>Import feature slower and less reliable than manual entry for many users</li>
+          <li>Data doesn't fully transfer — customers re-enter items manually even after importing</li>
+          <li>High-revenue QBO customer actively seeking alternative accounting software with better tax integration — QB→TT is a churn driver for this segment</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEEDS & WANTS -->
+  <div id="hm-needs" class="section">
+    <div class="section-title"><span>🎯</span> Customer Needs & Wants <span style="font-size:11px;font-weight:400;color:var(--text-light);margin-left:6px;"><span class="confidence-badge cb-inferred" style="margin-left:4px;">Synthesized from FMHs</span></span></div>
+    <div class="confidence-notice warn" style="margin-bottom:14px;">
+      <div class="cn-icon">🔶</div>
+      <div>Needs and wants are inferred from session observations and direct quotes. Items without a direct quote represent researcher synthesis — reasonable but not verbatim. Quotes backing specific items are in the Quotes Bank.</div>
+    </div>
+    <div class="needs-grid">
+      <div class="needs-col functional">
+        <h4>Functional Needs — What They're Trying to Do</h4>
+        <div class="need-item"><span class="dot">🏷️</span><div><strong>Know immediately if they're in the right place.</strong> Confirm entity type and product fit at the front door — before investing time. <em style="color:var(--text-light);font-size:11.5px;">(Direct: Marnie W., Pearson W. — #50577)</em></div></div>
+        <div class="need-item"><span class="dot">💲</span><div><strong>See entity-specific pricing before starting.</strong> Understand cost for their entity type — not at checkout. <em style="color:var(--text-light);font-size:11.5px;">(Direct: Marnie W. — #50577)</em></div></div>
+        <div class="need-item"><span class="dot">🔁</span><div><strong>Get QB data into TT without manual reconciliation.</strong> Zero re-entry, not partial transfer. <em style="color:var(--text-light);font-size:11.5px;">(Direct: April — #54075)</em></div></div>
+        <div class="need-item"><span class="dot">🧑‍💼</span><div><strong>Know who they're talking to before committing to expert help.</strong> CPA? Has this expert handled my situation? <em style="color:var(--text-light);font-size:11.5px;">(Direct: Maria D. — #55829)</em></div></div>
+        <div class="need-item"><span class="dot">🔢</span><div><strong>Trust the numbers TurboTax calculates.</strong> Customers who've seen large variances need explanations — not just different numbers. <em style="color:var(--text-light);font-size:11.5px;">(Direct: April — #54075)</em></div></div>
+        <div class="need-item"><span class="dot">📆</span><div><strong>Use TurboTax for planning, not just filing.</strong> Preview in October, update before submitting — workflow the product doesn't currently support. <em style="color:var(--text-light);font-size:11.5px;">(Synthesized from #50577, #54075)</em></div></div>
+      </div>
+      <div class="needs-col emotional">
+        <h4>Emotional Wants — What Would Make Them Stay</h4>
+        <div class="need-item"><span class="dot">🔄</span><div><strong>The same expert, year over year.</strong> Strongest retention signal in TY25 research. <em style="color:var(--text-light);font-size:11.5px;">(Direct: DIWM Customer — #49718)</em></div></div>
+        <div class="need-item"><span class="dot">🪄</span><div><strong>An expert who already knows their situation.</strong> Not a generic offer — a proactive, situation-aware match. <em style="color:var(--text-light);font-size:11.5px;">(Direct: Maria D. — #55829)</em></div></div>
+        <div class="need-item"><span class="dot">⚡</span><div><strong>Speed and confidence from their expert.</strong> Fast + knowledgeable = stress relief and WTP. <em style="color:var(--text-light);font-size:11.5px;">(Direct: Jake T. — #49718)</em></div></div>
+        <div class="need-item"><span class="dot">💼</span><div><strong>To feel like a sophisticated business owner.</strong> LLCs, S-Corps don't want DIY flows designed for gig workers. <em style="color:var(--text-light);font-size:11.5px;">(Synthesized from #50577, #55829)</em></div></div>
+        <div class="need-item"><span class="dot">🤝</span><div><strong>Honesty about what they qualify for.</strong> Withheld free-filing eligibility = permanent disengagement. <em style="color:var(--text-light);font-size:11.5px;">(Direct: Christine G. — #55829)</em></div></div>
+        <div class="need-item"><span class="dot">🛠️</span><div><strong>A product that feels like an integrated business tool.</strong> Year-round access, planning, QB connection that actually works. <em style="color:var(--text-light);font-size:11.5px;">(Synthesized from #50577, #54075)</em></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIND PHASE BARRIERS -->
+  <div id="hm-barriers" class="section">
+    <div class="section-title"><span>🚧</span> Find Phase Barriers — Detailed Findings</div>
+
+    <div class="finding-card">
+      <span class="finding-tag critical">🔴 Critical</span> <span class="prob-tag wayfinding">③ Wayfinding</span> <span class="prob-tag qbtt">④ QB/TT Gap</span>
+      <h4>QB Routes Customers to the Wrong Product</h4>
+      <p>Clicking TurboTax from inside a QB business account drops users into personal TT / Schedule C. Marnie W. (LLC/Partnership) was unable to file for two years because of this routing failure and was only unblocked when a TurboTax expert directed her to restart in TurboTax Business.</p>
+      <div class="quote-card">
+        <blockquote>"It seemed like there would be a reasonable expectation it would take me to a business TurboTax software...but it returned me to where I had already started."</blockquote>
+        <div class="attribution"><span class="persona-chip">Marnie W. · LLC/Partnership</span><span class="source-chip">TY25 BT E2E FMHs #50577</span></div>
+      </div>
+    </div>
+
+    <div class="finding-card">
+      <span class="finding-tag critical">🔴 Critical</span> <span class="prob-tag wayfinding">③ Wayfinding</span>
+      <h4>Entity Type Has No Confirmation at Entry</h4>
+      <p>Customers filing as LLCs, S-Corps, or Partnerships have no in-product signal they're in the right workflow. For customers with entity transitions, the experience actively adds confusion.</p>
+      <div class="quote-card">
+        <blockquote>"My only concern as it says it's for sole proprietorship and we're considered an LLC."</blockquote>
+        <div class="attribution"><span class="persona-chip">Participant · LLC</span><span class="source-chip">TY25 BT E2E FMHs #50577</span></div>
+      </div>
+    </div>
+
+    <div class="finding-card">
+      <span class="finding-tag high">🟠 High</span> <span class="prob-tag brand">① Brand</span> <span class="prob-tag qbtt">④ QB/TT Gap</span>
+      <h4>Brand Inertia Beats the QB Integration Benefit</h4>
+      <p>The QB→TT connection is a potential discovery driver but is not overcoming existing brand loyalty to H&R Block or CPAs. The broken integration experience actively reinforces doubt.</p>
+      <div class="quote-card">
+        <blockquote>"I'll deal with the devil I'm used to."</blockquote>
+        <div class="attribution"><span class="persona-chip">Tahera C. · SMLLC</span><span class="source-chip">TY25 BT E2E FMHs #50577 — on staying with H&R Block</span></div>
+      </div>
+    </div>
+
+    <div class="finding-card">
+      <span class="finding-tag high">🟠 High</span> <span class="prob-tag qbtt">④ QB/TT Gap</span>
+      <h4>Chart of Accounts Mapping Creates ~$20k Tax Variance (One Participant)</h4>
+      <p>April (S-Corp, construction, $2.8M revenue, QB Desktop) found a ~$20,000 discrepancy when comparing TurboTax to TaxAct. Root cause: QB Desktop account names don't match TurboTax categories. <strong>Note: this is a single participant finding — not confirmed across multiple sessions.</strong></p>
+      <div class="quote-card">
+        <blockquote>"My biggest issue was aligning the categories within the chart of accounts with the categories that TurboTax wanted them in. And that transition was never a clean conversation."</blockquote>
+        <div class="attribution"><span class="persona-chip">April · S-Corp, Construction, $2.8M</span><span class="source-chip">TY25 QBO Filing FMHs #54075</span></div>
+      </div>
+      <div class="quote-card">
+        <blockquote>"I will use two or three different tax softwares...and Intuit's way off."</blockquote>
+        <div class="attribution"><span class="persona-chip">April</span><span class="source-chip">#54075</span></div>
+      </div>
+    </div>
+
+    <div class="finding-card">
+      <span class="finding-tag medium">🟡 Medium</span> <span class="prob-tag credibility">② Expert Credibility</span>
+      <h4>Aggressive Upsell Prompts Before Help Is Needed Reduce Trust</h4>
+      <p>Mike S. flagged "chat now / live help" prompts as appearing too early. For long-time DIY users, premature upsell signals suggest the product doesn't trust them to handle it themselves.</p>
+    </div>
+
+    <div class="finding-card">
+      <span class="finding-tag medium">🟡 Medium</span> <span class="prob-tag wayfinding">③ Wayfinding</span>
+      <h4>Free Filing Eligibility Not Surfaced</h4>
+      <p>Christine G. paid for TurboTax during a low-income year and only found out she qualified for free filing from a friend — not from TurboTax.</p>
+    </div>
+  </div>
+
+  <!-- SUMMARY TABLE -->
+  <div id="hm-summary" class="section">
+    <div class="section-title"><span>📊</span> Summary: Critical Signals by Theme</div>
+    <table class="summary-table">
+      <thead>
+        <tr><th>Theme</th><th>Finding</th><th>Severity</th><th>Source</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>QB→TT product routing</strong></td><td>QB sends customers to personal TT/Schedule C</td><td><span class="sev-dot critical">Critical</span></td><td><span class="proj-badge">#50577</span></td></tr>
+        <tr><td><strong>Entity type confirmation</strong></td><td>No in-product confirmation of correct workflow</td><td><span class="sev-dot critical">Critical</span></td><td><span class="proj-badge">#50577</span></td></tr>
+        <tr><td><strong>Pricing opacity by entity</strong></td><td>$150 vs. $399 not surfaced until mid-session</td><td><span class="sev-dot critical">Critical</span></td><td><span class="proj-badge">#50577</span></td></tr>
+        <tr><td><strong>Auto-enroll to paid expert</strong></td><td>Silent upgrade → churn to IRS Free File</td><td><span class="sev-dot critical">Critical</span></td><td><span class="proj-badge">#55829</span></td></tr>
+        <tr><td><strong>S-Corp pricing → CPA defection</strong></td><td>Bundle ambiguity drove long-time user to CPA</td><td><span class="sev-dot critical">Critical</span></td><td><span class="proj-badge">#55829</span></td></tr>
+        <tr><td><strong>AI vs. expert indistinguishable</strong></td><td>Customers unsure if talking to AI or human</td><td><span class="sev-dot critical">Critical</span></td><td><span class="proj-badge">#50577</span></td></tr>
+        <tr><td><strong>"Tax advisor" dismissed</strong></td><td>Customers want CPA credential or situational match</td><td><span class="sev-dot critical">Critical</span></td><td><span class="proj-badge">#55829</span></td></tr>
+        <tr style="background:#EAF7F0"><td><strong>Expert continuity drives WTP</strong></td><td>Year-over-year same expert = strong retention intent</td><td><span class="sev-dot opportunity">Opportunity</span></td><td><span class="proj-badge">#49718</span></td></tr>
+        <tr style="background:#EAF7F0"><td><strong>Remote platform advantage</strong></td><td>Customers find remote easier than in-person CPAs</td><td><span class="sev-dot opportunity">Opportunity</span></td><td><span class="proj-badge">#49718</span></td></tr>
+        <tr><td><strong>QB account mapping → $20k variance</strong></td><td>Chart of accounts mismatch creates accuracy distrust (1 participant)</td><td><span class="sev-dot high">High</span></td><td><span class="proj-badge">#54075</span></td></tr>
+        <tr><td><strong>Manual entry faster than importing</strong></td><td>Import UX slower than manual for many users</td><td><span class="sev-dot high">High</span></td><td><span class="proj-badge">#54075</span></td></tr>
+        <tr><td><strong>Brand inertia vs. QB integration</strong></td><td>H&R Block loyalty not overcome by QB connection</td><td><span class="sev-dot high">High</span></td><td><span class="proj-badge">#50577</span></td></tr>
+        <tr><td><strong>Aggressive upsell prompts</strong></td><td>Premature live help prompts reduce DIY trust</td><td><span class="sev-dot medium">Medium</span></td><td><span class="proj-badge">#55829</span></td></tr>
+        <tr><td><strong>Free filing eligibility not surfaced</strong></td><td>Long-time user paid unnecessarily</td><td><span class="sev-dot medium">Medium</span></td><td><span class="proj-badge">#55829</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- DIRECT QUOTES BANK -->
+  <div id="hm-quotes" class="section">
+    <div class="section-title"><span>💬</span> Direct Quotes Bank — TY25, External Customers Only</div>
+
+    <div style="margin-bottom:16px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:10px;">Getting to BizTax</div>
+      <div class="quote-card"><blockquote>"It seemed like there would be a reasonable expectation it would take me to a business TurboTax software...but it returned me to where I had already started."</blockquote><div class="attribution"><span class="persona-chip">Marnie W.</span><span class="source-chip">#50577</span></div></div>
+      <div class="quote-card"><blockquote>"I'll deal with the devil I'm used to."</blockquote><div class="attribution"><span class="persona-chip">Tahera C. · SMLLC</span><span class="source-chip">#50577</span></div></div>
+      <div class="quote-card"><blockquote>"My only concern as it says it's for sole proprietorship and we're considered an LLC."</blockquote><div class="attribution"><span class="persona-chip">Participant · LLC</span><span class="source-chip">#50577</span></div></div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:10px;">Expert Credibility</div>
+      <div class="quote-card"><blockquote>"If I knew the expert I was talking to was a CPA, I'd feel more confident. If they're a tax advisor... what the hell does that even mean?"</blockquote><div class="attribution"><span class="persona-chip">Maria D.</span><span class="source-chip">#55829</span></div></div>
+      <div class="quote-card"><blockquote>"Had I called an expert, and that expert actually knew about a household employee... great! But I don't trust they'll know about that."</blockquote><div class="attribution"><span class="persona-chip">Maria D.</span><span class="source-chip">#55829</span></div></div>
+      <div class="quote-card"><blockquote>"If they specifically called that out, like, 'Do you need expert help because you have a household employee?' we're prepared for that."</blockquote><div class="attribution"><span class="persona-chip">Maria D.</span><span class="source-chip">#55829</span></div></div>
+      <div class="quote-card"><blockquote>"I'm assuming Intuit Assist is some kind of AI agent platform and Expert Help actually would get you a human, but...unsure."</blockquote><div class="attribution"><span class="persona-chip">Pearson W. · Sole Prop</span><span class="source-chip">#50577</span></div></div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:10px;">Positive Expert Experiences</div>
+      <div class="quote-card" style="border-left-color:#1A7A4A;background:#EAF7F0;"><blockquote style="color:#1A5C3A;">"The agent did a phenomenal job. Was a mixture of a therapist and a tax advisor... walked through screen by screen and fixed this."</blockquote><div class="attribution"><span class="persona-chip">DIWM Customer</span><span class="source-chip">#49718 — Chase Williams session</span></div></div>
+      <div class="quote-card" style="border-left-color:#1A7A4A;background:#EAF7F0;"><blockquote style="color:#1A5C3A;">"If I could work with that same person every single year, guaranteed, I would probably pay the fee just to have that peace of mind."</blockquote><div class="attribution"><span class="persona-chip">DIWM Customer</span><span class="source-chip">#49718 — Chase Williams session</span></div></div>
+      <div class="quote-card" style="border-left-color:#1A7A4A;background:#EAF7F0;"><blockquote style="color:#1A5C3A;">"Everyone that I've spoken to has been very formal, very polite, and knowledgeable, and also quick. I think that's probably the most important thing."</blockquote><div class="attribution"><span class="persona-chip">Jake T.</span><span class="source-chip">#49718</span></div></div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:10px;">Pricing & Service Confusion</div>
+      <div class="quote-card"><blockquote>"I wasn't aware of that at all... that's why I was so shocked... when I saw the amount of the invoice."</blockquote><div class="attribution"><span class="persona-chip">Susan H. · Long-time DIY</span><span class="source-chip">#55829</span></div></div>
+      <div class="quote-card"><blockquote>"Let an expert file your taxes for only $150 only applies to sole proprietors...for $399 we may be able to...It's better than $1,200."</blockquote><div class="attribution"><span class="persona-chip">Marnie W. · LLC/Partnership</span><span class="source-chip">#50577</span></div></div>
+    </div>
+
+    <div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:10px;">QB→TT Integration</div>
+      <div class="quote-card"><blockquote>"My biggest issue was aligning the categories within the chart of accounts with the categories that TurboTax wanted them in. And that transition was never a clean conversation."</blockquote><div class="attribution"><span class="persona-chip">April · S-Corp, Construction</span><span class="source-chip">#54075</span></div></div>
+      <div class="quote-card"><blockquote>"I will use two or three different tax softwares...and Intuit's way off."</blockquote><div class="attribution"><span class="persona-chip">April</span><span class="source-chip">#54075</span></div></div>
+      <div class="quote-card"><blockquote>"I'm just looking forward to finding another accounting software that has a good relationship with tax software. So that works well together."</blockquote><div class="attribution"><span class="persona-chip">Churner 1 · IT Services, ~$10–12M</span><span class="source-chip">#54075</span></div></div>
+    </div>
+  </div>
+
+  <!-- GAPS -->
+  <div id="hm-gaps" class="section">
+    <div class="section-title"><span>🔍</span> Gaps in TY25 HeyMarvin Data</div>
+    <div class="gap-list">
+      <div class="gap-item"><div class="gap-icon">📉</div><div><strong>No quantitative tNPS or funnel metrics.</strong> All findings are qualitative. Quantitative TY25 signals need to be pulled from Signal/Looker directly.</div></div>
+      <div class="gap-item"><div class="gap-icon">📂</div><div><strong>TY25 CK2TT Retro Interviews (#57640)</strong> has no files uploaded yet — an abandonment retro that may have additional Find Phase data.</div></div>
+      <div class="gap-item"><div class="gap-icon">🔲</div><div><strong>E3B Lite (#56618)</strong> has external customer sessions (Apr–May 2026) labeled "TY26" — covers 365 Business trial conversion. Product boundary confusion findings are relevant but out of strict BizTax scope; available on request.</div></div>
+      <div class="gap-item" style="background:#FFF9E6;border-color:#FFE0A3;"><div class="gap-icon">⛔</div><div><strong>Signal 2nd peak focus groups (#57771, Jun 3–8)</strong> — confirmed internal only. No external customer sessions found.</div></div>
+    </div>
+  </div>
+
+  <!-- HALLUCINATION CHECK -->
+  <div class="hc-section">
+    <div class="hc-title">📋 Source & Integrity Notes — HeyMarvin Tab</div>
+    <div class="hc-item"><span class="hc-label hc-backed">✅ DATA-BACKED</span> All direct quotes include participant name/pseudonym and HeyMarvin project ID. Traceable to the original sessions in projects #50577, #54075, #49718, #55829.</div>
+    <div class="hc-item"><span class="hc-label hc-inferred">🔶 INFERENCE</span> "Multiple E2E FMH participants didn't know whether they were in the right product" — only Marnie W. and an unnamed LLC participant are directly quoted. "Multiple" is drawn from researcher session summary notes, not independently quoted participants. Flagged inline above.</div>
+    <div class="hc-item"><span class="hc-label hc-inferred">🔶 INFERENCE</span> Customer needs/wants items marked "(Synthesized)" represent researcher pattern recognition across sessions — grounded but not verbatim. Each synthesized item is labeled with its source session(s).</div>
+    <div class="hc-item"><span class="hc-label hc-inferred">🔶 INFERENCE</span> The ~$20k variance figure is from a single participant (April, #54075). It is not confirmed as a systemic issue across the research population. Flagged inline.</div>
+    <div class="hc-item"><span class="hc-label hc-backed">✅ DATA-BACKED</span> Expert continuity as WTP driver is the highest-confidence positive claim — directly and unambiguously stated by the participant in #49718.</div>
+    <div style="margin-top:10px;font-size:11.5px;color:var(--text-light);">📊 <strong>Output Confidence: Medium-High.</strong> Key critical findings are data-backed with named sources. Synthesized themes and pattern claims involve reasonable researcher inference and are labeled. No ❌ unsourced claims present.</div>
+  </div>
+
+</div>
+
+<!-- ====================================================
+     TAB 2: VOC SUITE RESEARCH
+     ==================================================== -->
+<div id="tab-voc" class="main-panel">
+
+  <div class="confidence-notice">
+    <div class="cn-icon">✅</div>
+    <div><span class="confidence-badge cb-backed">Data-Backed</span> All signals in this tab are from the Intuit VOC Suite Google Sheets export, Jan–Jun 2026 (~500 records per tab). Each signal includes a Record ID traceable to the source sheet. Theme syntheses are labeled as inferred — they represent patterns across records, not individual quotes.</div>
+  </div>
+
+  <div style="background:#E8F0FF;border:1px solid #C0D4F5;border-radius:8px;padding:13px 16px;font-size:13px;line-height:1.6;margin-bottom:18px;">
+    <strong>Source:</strong> Intuit VOC Suite — contact center transcript semantic search, Jan–Jun 2026. Five semantic searches across ~500 records each (2,500 total). Each tab below = one Google Sheet. To pull a full transcript: open the VOC Suite, navigate to the tab, look up the Record ID. The search query column shows the exact query used — re-run to re-locate.
+  </div>
+
+  <div class="voc-subnav">
+    <button class="voc-subtab vst-active" onclick="switchVoc(this,'vp1')">1 · BizTax Services</button>
+    <button class="voc-subtab" onclick="switchVoc(this,'vp2')">2 · Landing Page</button>
+    <button class="voc-subtab" onclick="switchVoc(this,'vp3')">3 · Expert Impressions</button>
+    <button class="voc-subtab" onclick="switchVoc(this,'vp4')">4 · Where Do I Start</button>
+    <button class="voc-subtab" onclick="switchVoc(this,'vp5')">5 · Price</button>
+  </div>
+
+  <!-- PANEL 1 -->
+  <div id="vp1" class="voc-panel vp-active">
+    <div class="voc-tab-info">
+      <div class="voc-tab-num">1</div>
+      <div class="voc-tab-meta">
+        <div class="voc-tab-name">Customer POV on BizTax Services</div>
+        <div class="voc-tab-query">"Customers confusion on the business tax services offerings"</div>
+        <div class="voc-tab-count">~500 records · Jan–Jun 2026</div>
+      </div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;"><span class="prob-tag brand">Brand</span><span class="prob-tag wayfinding">Wayfinding</span></div>
+    </div>
+    <div class="voc-themes">
+      <div class="voc-themes-label">Customer Pain Points <span class="confidence-badge cb-inferred" style="margin-left:6px;">Synthesized from record patterns</span></div>
+      <ul>
+        <li><strong>Business/personal routing failure:</strong> Customers unable to self-route — reaching wrong departments or wrong products before any expert interaction</li>
+        <li><strong>Service tier opacity:</strong> "Full Service," "Expert Assisted," and "DIWM" not meaningfully differentiated — customers don't understand what they're selecting</li>
+        <li><strong>Mid-flow product misalignment:</strong> Wrong product discovered only after 30–60 min investment — no front-door guard rail</li>
+      </ul>
+      <div class="voc-themes-label" style="margin-top:10px;">Customer Needs <span class="confidence-badge cb-inferred" style="margin-left:6px;">Inferred</span></div>
+      <ul>
+        <li>Know at the front door whether TurboTax handles their business type</li>
+        <li>Clear distinction between DIY, expert-assisted, and full-service at discovery — before investing time</li>
+      </ul>
+      <div class="voc-themes-label" style="margin-top:10px;">Transcripts to Explore Further</div>
+      <ul>
+        <li>Rec #139 — Single-member LLC discovers mid-call she should file as individual; appointment cancelled</li>
+        <li>Rec #206 — "Does TurboTax do business taxes?" told virtual only, responds "never mind"</li>
+        <li>Rec #14 — Sole prop confused by partnership questions after email recommended business taxes first</li>
+      </ul>
+    </div>
+    <div class="voc-signal-cards">
+      <div class="voc-signal brand-signal"><div class="signal-id">Record #206</div><blockquote>"Customer asks if TurboTax offers business tax services — told only virtual expert options, not in-person. Responds: 'never mind.'"</blockquote><span class="prob-tag brand">Brand Calcification</span><span class="prob-tag credibility">Expert Credibility</span><div class="signal-note">Discovery failure: brand signal blocks consideration before any evaluation occurs.</div></div>
+      <div class="voc-signal wayfinding-signal"><div class="signal-id">Record #139</div><blockquote>"Single-member LLC customer learns mid-call she should file as an individual on Schedule C — not the business product. Appointment cancelled; must start over."</blockquote><span class="prob-tag wayfinding">Wayfinding</span><div class="signal-note">Misrouting caught at intake, not discovery. No front-door guard rail for entity-type mismatches.</div></div>
+      <div class="voc-signal wayfinding-signal"><div class="signal-id">Record #14</div><blockquote>"Sole proprietor received email recommending business taxes first — then was confused by partnership questions that didn't apply. 'It was very confusing and very different.'"</blockquote><span class="prob-tag wayfinding">Wayfinding</span><div class="signal-note">Marketing-triggered misrouting: email channel sending sole props into entity-wrong flows.</div></div>
+    </div>
+  </div>
+
+  <!-- PANEL 2 -->
+  <div id="vp2" class="voc-panel">
+    <div class="voc-tab-info">
+      <div class="voc-tab-num">2</div>
+      <div class="voc-tab-meta">
+        <div class="voc-tab-name">BizTax Landing Page Impressions</div>
+        <div class="voc-tab-query">"Customer reaction to the turbotax business landing page"</div>
+        <div class="voc-tab-count">~500 records · Jan–Jun 2026</div>
+      </div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;"><span class="prob-tag brand">Brand</span><span class="prob-tag wayfinding">Wayfinding</span></div>
+    </div>
+    <div class="voc-themes">
+      <div class="voc-themes-label">Customer Pain Points <span class="confidence-badge cb-inferred" style="margin-left:6px;">Synthesized</span></div>
+      <ul>
+        <li><strong>Trust deficit at first impression:</strong> "Shady," "aggressive," "chaos" — trust failure before any expert interaction; precedes any credibility assessment</li>
+        <li><strong>Interrogation model:</strong> Question-based navigation blocks direct access — customers want to explore before being interviewed</li>
+        <li><strong>UX regression signal:</strong> "Last year it just worked" — year-over-year changes are actively eroding equity with returning customers</li>
+      </ul>
+      <div class="voc-themes-label" style="margin-top:10px;">Customer Needs <span class="confidence-badge cb-inferred" style="margin-left:6px;">Inferred</span></div>
+      <ul>
+        <li>Ability to navigate directly to business tax without being interrogated first</li>
+        <li>Trust signals at first impression — the landing page must feel safe before asking for information</li>
+      </ul>
+      <div class="voc-themes-label" style="margin-top:10px;">Transcripts to Explore Further</div>
+      <ul>
+        <li>Rec #3 — "Shady" and "aggressive marketing" trust failure</li>
+        <li>Rec #18 — Interrogation model complaint; "your landing page sucks"</li>
+        <li>Rec #44 — "Last year I just typed my info...this time I can't even get started"</li>
+      </ul>
+    </div>
+    <div class="voc-signal-cards">
+      <div class="voc-signal brand-signal"><div class="signal-id">Record #3</div><blockquote>"TurboTax's landing pages use aggressive marketing tactics that artificially inflate pricing. Customer describes the experience as 'shady' and untrustworthy."</blockquote><span class="prob-tag brand">Brand Calcification</span><div class="signal-note">Trust failure happens at discovery surface — before any expert interaction.</div></div>
+      <div class="voc-signal wayfinding-signal"><div class="signal-id">Record #18</div><blockquote>"Your landing page sucks asking me to answer questions instead of giving me the option to navigate to what I need."</blockquote><span class="prob-tag wayfinding">Wayfinding</span><div class="signal-note">Interrogation-before-value model blocks the Find Phase intent entirely.</div></div>
+      <div class="voc-signal brand-signal"><div class="signal-id">Record #44</div><blockquote>"Last year I just sat down and typed in my information and it was great. This time I don't know how long I've been on your website, but I can't even get started."</blockquote><span class="prob-tag brand">Brand</span><span class="prob-tag wayfinding">Wayfinding</span><div class="signal-note">Returning customer can't find the path they know exists — prior trust being actively eroded.</div></div>
+    </div>
+  </div>
+
+  <!-- PANEL 3 -->
+  <div id="vp3" class="voc-panel">
+    <div class="voc-tab-info">
+      <div class="voc-tab-num">3</div>
+      <div class="voc-tab-meta">
+        <div class="voc-tab-name">Expert Impressions (Pre-Match)</div>
+        <div class="voc-tab-query">"Business tax customer impressions of experts capabilities before matching with an expert"</div>
+        <div class="voc-tab-count">~500 records · Jan–Jun 2026</div>
+      </div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;"><span class="prob-tag credibility">Expert Credibility</span><span class="prob-tag brand">Brand</span></div>
+    </div>
+    <div class="voc-themes">
+      <div class="voc-themes-label">Customer Pain Points <span class="confidence-badge cb-inferred" style="margin-left:6px;">Synthesized</span></div>
+      <ul>
+        <li><strong>No credential visibility before matching:</strong> Only years of experience and Intuit course completion shown — no CPA/EA, no specialization, no industry context</li>
+        <li><strong>Black-box matching:</strong> Entirely availability-based; no ability to select, preview, or approve who handles their business taxes</li>
+        <li><strong>AI substitution suspicion:</strong> Significant cohort believes "Tax Expert" responses are AI-generated — directly undermines the expert-led premise</li>
+      </ul>
+      <div class="voc-themes-label" style="margin-top:10px;">Customer Needs <span class="confidence-badge cb-inferred" style="margin-left:6px;">Inferred</span></div>
+      <ul>
+        <li>See professional credentials (CPA, EA) and specialization <em>before</em> being matched — directly stated by multiple records</li>
+        <li>Know the expert has handled their specific business situation before</li>
+      </ul>
+      <div class="voc-themes-label" style="margin-top:10px;">Transcripts to Explore Further</div>
+      <ul>
+        <li>Rec #3 — "I wanna see their credentials and then I will decide whether I wanna meet with that person"</li>
+        <li>Rec #18 — Web interface fails to display qualifications or specialty areas</li>
+        <li>Rec #26 — "Tax Expert feature appears to use AI-generated responses"</li>
+      </ul>
+    </div>
+    <div class="voc-signal-cards">
+      <div class="voc-signal credibility-signal"><div class="signal-id">Record #3</div><blockquote>"Tax Expert Matching system does not display professional credentials (CPA, Enrolled Agent, MBA, etc.) before matching. Customer: 'I wanna see their credentials and then I will decide whether I wanna meet with that person or not.'"</blockquote><span class="prob-tag credibility">Expert Credibility</span><div class="signal-note">Direct articulation of the Passive Trust Signal need — this is the FY27 deliverable in the customer's own words.</div></div>
+      <div class="voc-signal credibility-signal"><div class="signal-id">Record #18</div><blockquote>"The web interface fails to display professional qualifications, specialty areas, or experience indicators such as international tax or expat filing capabilities."</blockquote><span class="prob-tag credibility">Expert Credibility</span><div class="signal-note">Industry Vertical gap: specialization signals absent even when expertise exists. A display problem, not an expertise problem.</div></div>
+      <div class="voc-signal brand-signal"><div class="signal-id">Record #26</div><blockquote>"Tax Expert feature appears to use AI-generated responses rather than genuine expert knowledge."</blockquote><span class="prob-tag credibility">Expert Credibility</span><span class="prob-tag brand">Brand</span><div class="signal-note">AI/HI ambiguity closes the consideration window before a match occurs.</div></div>
+    </div>
+  </div>
+
+  <!-- PANEL 4 -->
+  <div id="vp4" class="voc-panel">
+    <div class="voc-tab-info">
+      <div class="voc-tab-num">4</div>
+      <div class="voc-tab-meta">
+        <div class="voc-tab-name">"Where Do I Start" — Entry Navigation</div>
+        <div class="voc-tab-query">"'where do I start' + business tax landing page"</div>
+        <div class="voc-tab-count">~500 records · Jan–Jun 2026</div>
+      </div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;"><span class="prob-tag wayfinding">Wayfinding</span><span class="prob-tag qbtt">QB→TT</span></div>
+    </div>
+    <div class="voc-themes">
+      <div class="voc-themes-label">Customer Pain Points <span class="confidence-badge cb-inferred" style="margin-left:6px;">Synthesized</span></div>
+      <ul>
+        <li><strong>"Start for Free" routes to wrong product:</strong> Primary unauthenticated CTA leads to Expert Advice, not business tax filing — business filers have no visible entry point without logging in</li>
+        <li><strong>Business taxes visually absent:</strong> Only "Start for Free" and "Sign In" visible when unauthenticated — the entire consideration stage</li>
+        <li><strong>QB→TT drops context:</strong> Customers from QuickBooks land on what looks like a personal tax flow — QB relationship not recognized</li>
+        <li><strong>Embarrassment signal:</strong> Business owners expressing shame and frustration at the first page — permanent consideration damage</li>
+      </ul>
+      <div class="voc-themes-label" style="margin-top:10px;">Customer Needs <span class="confidence-badge cb-inferred" style="margin-left:6px;">Inferred</span></div>
+      <ul>
+        <li>Visible business tax entry point for unauthenticated visitors — before sign-in is required</li>
+        <li>QB→TT handoff that preserves business context and explicitly confirms data transfer</li>
+      </ul>
+      <div class="voc-themes-label" style="margin-top:10px;">Transcripts to Explore Further</div>
+      <ul>
+        <li>Rec #12 — "I don't see a place where it says business taxes" — unauthenticated homepage</li>
+        <li>Rec #204 — "I literally got stuck on the first page" — embarrassment signal</li>
+        <li>Rec #356 — QB LLC owner lands in TT unsure how data will transfer</li>
+      </ul>
+    </div>
+    <div class="voc-signal-cards">
+      <div class="voc-signal wayfinding-signal"><div class="signal-id">Record #12</div><blockquote>"I'm on the web page without signing in — up at the top it says 'start for free' or 'sign in.' I don't see a place where it says business taxes."</blockquote><span class="prob-tag wayfinding">Wayfinding</span><div class="signal-note">Business tax invisible to unauthenticated browsers — the entire consideration stage is cut off.</div></div>
+      <div class="voc-signal wayfinding-signal"><div class="signal-id">Record #204</div><blockquote>"I literally got stuck on the first page where it says 'where should we start today?' — customer expressing embarrassment about not being able to begin their business taxes."</blockquote><span class="prob-tag wayfinding">Wayfinding</span><div class="signal-note">Embarrassment = permanent consideration killer. A business owner feeling incompetent at the front door will not call back.</div></div>
+      <div class="voc-signal qbtt-signal"><div class="signal-id">Record #356</div><blockquote>"Started automotive repair LLC, clicked 'start taxes' in QuickBooks, which brought them to TurboTax Online — immediately unsure how data would transfer between the systems."</blockquote><span class="prob-tag qbtt">QB→TT</span><span class="prob-tag wayfinding">Wayfinding</span><div class="signal-note">The integration promise creates an expectation of data continuity — then doesn't deliver it.</div></div>
+    </div>
+  </div>
+
+  <!-- PANEL 5 -->
+  <div id="vp5" class="voc-panel">
+    <div class="voc-tab-info">
+      <div class="voc-tab-num">5</div>
+      <div class="voc-tab-meta">
+        <div class="voc-tab-name">Price Impressions — BizTax Discovery</div>
+        <div class="voc-tab-query">"customer impression of price for business tax pages"</div>
+        <div class="voc-tab-count">~500 records · Jan–Jun 2026</div>
+      </div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;"><span class="prob-tag brand">Brand</span></div>
+    </div>
+    <div class="voc-themes">
+      <div class="voc-themes-label">Customer Pain Points <span class="confidence-badge cb-inferred" style="margin-left:6px;">Synthesized</span></div>
+      <ul>
+        <li><strong>$449 vs. $150 anchor collision:</strong> Customers anchoring on personal tax pricing are sticker-shocked — value equation vs. CPA is never established before price appears</li>
+        <li><strong>Price revealed mid-flow, not upfront:</strong> Multiple records show one price at registration and a substantially higher price at checkout — commitment trap</li>
+        <li><strong>Year-over-year inconsistency:</strong> Returning customers see unexplained price increases — perceived as price gouging without context</li>
+        <li><strong>CPA comparison never surfaces:</strong> The $3,500 CPA comparison that would reframe $449 as a bargain is never visible at discovery</li>
+      </ul>
+      <div class="voc-themes-label" style="margin-top:10px;">Customer Needs <span class="confidence-badge cb-inferred" style="margin-left:6px;">Inferred</span></div>
+      <ul>
+        <li>See a clear, honest starting price <em>before</em> beginning the process — and understand what drives variation</li>
+        <li>Value context (vs. CPA) established before price is revealed</li>
+      </ul>
+      <div class="voc-themes-label" style="margin-top:10px;">Transcripts to Explore Further</div>
+      <ul>
+        <li>Rec #72 — Expected $150, told $449 — purchase blocked</li>
+        <li>Rec #211 — $150 offer on landing page → $775+ after starting; 5× escalation</li>
+        <li>Rec #200 — Quoted $190 at registration; payment page shows $518</li>
+      </ul>
+    </div>
+    <div class="voc-signal-cards">
+      <div class="voc-signal price-signal"><div class="signal-id">Record #72</div><blockquote>"Expected business tax filing to cost $150 (same as personal tax rate) but was informed starting price is $449. This significant price discrepancy created dissatisfaction and prevented the purchase decision."</blockquote><span class="prob-tag brand">Brand</span><div class="signal-note">Personal/business price anchor collision — the framing is absent, not just the price.</div></div>
+      <div class="voc-signal price-signal"><div class="signal-id">Record #211</div><blockquote>"Business tax section displayed a $150 offer for expert filing — but after starting the process, a price preview showed over $775."</blockquote><span class="prob-tag brand">Brand</span><div class="signal-note">5× price escalation from discovery to checkout. Directly validates the FY27 Shopping & Merchandising deliverable.</div></div>
+      <div class="voc-signal price-signal"><div class="signal-id">Record #200</div><blockquote>"Initially quoted $190 during registration; payment page now shows $518."</blockquote><span class="prob-tag brand">Brand</span><div class="signal-note">Mid-flow escalation after emotional commitment reads as deceptive, not as complexity-based pricing.</div></div>
+    </div>
+  </div>
+
+  <!-- BACKTRACK TABLE -->
+  <div style="margin-top:28px;">
+    <div class="section-title"><span>📋</span> Priority Backtrack Table — Full-Transcript Candidates</div>
+    <div style="background:#E8F0FF;border:1px solid #C0D4F5;border-radius:8px;padding:11px 14px;font-size:12.5px;margin-bottom:14px;line-height:1.6;">
+      <strong>How to use:</strong> Open the Intuit VOC Suite, navigate to the VOC tab, look up the Record ID. The Search Query column contains the exact query used to generate that tab.
+    </div>
+    <table class="backtrack-table">
+      <thead><tr><th>ID</th><th>Key Signal</th><th>VOC Tab</th><th>Search Query</th><th>Find Phase Problem</th></tr></thead>
+      <tbody>
+        <tr><td class="rec-id">#3</td><td>Confusion: consultation vs. tax filing</td><td><span class="tab-src">Tab 1</span></td><td class="sq">Customers confusion on the business tax services offerings</td><td><span class="prob-tag credibility">Expert Credibility</span><span class="prob-tag brand">Brand</span></td></tr>
+        <tr><td class="rec-id">#8</td><td>Full Service appears focused on personal, not business</td><td><span class="tab-src">Tab 1</span></td><td class="sq">Customers confusion on the business tax services offerings</td><td><span class="prob-tag wayfinding">Wayfinding</span></td></tr>
+        <tr><td class="rec-id">#14</td><td>Sole prop confused by partnership questions after email recommended business taxes first</td><td><span class="tab-src">Tab 1</span></td><td class="sq">Customers confusion on the business tax services offerings</td><td><span class="prob-tag wayfinding">Wayfinding</span><span class="prob-tag brand">Brand</span></td></tr>
+        <tr><td class="rec-id">#48</td><td>First-time business filer called wrong departments multiple times</td><td><span class="tab-src">Tab 1</span></td><td class="sq">Customers confusion on the business tax services offerings</td><td><span class="prob-tag wayfinding">Wayfinding</span></td></tr>
+        <tr><td class="rec-id">#139</td><td>Single-member LLC discovers mid-call: should file as individual (Schedule C) — restarts</td><td><span class="tab-src">Tab 1</span></td><td class="sq">Customers confusion on the business tax services offerings</td><td><span class="prob-tag brand">Brand</span><span class="prob-tag wayfinding">Wayfinding</span></td></tr>
+        <tr><td class="rec-id">#206</td><td>"Does TurboTax do business taxes?" — told virtual only, responds "never mind"</td><td><span class="tab-src">Tab 1</span></td><td class="sq">Customers confusion on the business tax services offerings</td><td><span class="prob-tag brand">Brand Calcification</span><span class="prob-tag credibility">Expert Credibility</span></td></tr>
+        <tr><td class="rec-id">#3</td><td>Landing page described as "shady" — aggressive marketing, trust deficit</td><td><span class="tab-src">Tab 2</span></td><td class="sq">Customer reaction to the turbotax business landing page</td><td><span class="prob-tag brand">Brand</span></td></tr>
+        <tr><td class="rec-id">#8</td><td>Facebook post: "Turbo tax trying hard af to not attract customers with this ad"</td><td><span class="tab-src">Tab 2</span></td><td class="sq">Customer reaction to the turbotax business landing page</td><td><span class="prob-tag brand">Brand</span></td></tr>
+        <tr><td class="rec-id">#18</td><td>"Forced to answer questions rather than being given the option to navigate directly"</td><td><span class="tab-src">Tab 2</span></td><td class="sq">Customer reaction to the turbotax business landing page</td><td><span class="prob-tag wayfinding">Wayfinding</span></td></tr>
+        <tr><td class="rec-id">#44</td><td>"Last year I just sat down and typed my info...this time I can't even get started"</td><td><span class="tab-src">Tab 2</span></td><td class="sq">Customer reaction to the turbotax business landing page</td><td><span class="prob-tag wayfinding">Wayfinding</span><span class="prob-tag brand">Brand</span></td></tr>
+        <tr><td class="rec-id">#298</td><td>Clicked $150 promotion; waited one hour — no expert connection made</td><td><span class="tab-src">Tab 2</span></td><td class="sq">Customer reaction to the turbotax business landing page</td><td><span class="prob-tag credibility">Expert Credibility</span><span class="prob-tag wayfinding">Wayfinding</span></td></tr>
+        <tr><td class="rec-id">#3</td><td>"I wanna see their credentials and then I will decide whether I wanna meet with that person"</td><td><span class="tab-src">Tab 3</span></td><td class="sq">Business tax customer impressions of experts capabilities before matching</td><td><span class="prob-tag credibility">Expert Credibility</span></td></tr>
+        <tr><td class="rec-id">#7</td><td>No ability to preview profiles or credentials before matching</td><td><span class="tab-src">Tab 3</span></td><td class="sq">Business tax customer impressions of experts capabilities before matching</td><td><span class="prob-tag credibility">Expert Credibility</span></td></tr>
+        <tr><td class="rec-id">#18</td><td>"Web interface fails to display professional qualifications, specialty areas, or experience indicators"</td><td><span class="tab-src">Tab 3</span></td><td class="sq">Business tax customer impressions of experts capabilities before matching</td><td><span class="prob-tag credibility">Expert Credibility</span></td></tr>
+        <tr><td class="rec-id">#26</td><td>"Tax Expert feature appears to use AI-generated responses rather than genuine expert knowledge"</td><td><span class="tab-src">Tab 3</span></td><td class="sq">Business tax customer impressions of experts capabilities before matching</td><td><span class="prob-tag credibility">Expert Credibility</span><span class="prob-tag brand">Brand</span></td></tr>
+        <tr><td class="rec-id">#35</td><td>Expert Review experts described as having "no knowledge" and lacking credentials</td><td><span class="tab-src">Tab 3</span></td><td class="sq">Business tax customer impressions of experts capabilities before matching</td><td><span class="prob-tag credibility">Expert Credibility</span></td></tr>
+        <tr><td class="rec-id">#44</td><td>"Concerned about not knowing who they will be paired with"</td><td><span class="tab-src">Tab 3</span></td><td class="sq">Business tax customer impressions of experts capabilities before matching</td><td><span class="prob-tag credibility">Expert Credibility</span></td></tr>
+        <tr><td class="rec-id">#166</td><td>Expert's own intake questions "raised doubts about their competency"</td><td><span class="tab-src">Tab 3</span></td><td class="sq">Business tax customer impressions of experts capabilities before matching</td><td><span class="prob-tag credibility">Expert Credibility</span></td></tr>
+        <tr><td class="rec-id">#12</td><td>"I don't see a place where it says business taxes" — unauthenticated homepage</td><td><span class="tab-src">Tab 4</span></td><td class="sq">'where do I start' + business tax landing page</td><td><span class="prob-tag wayfinding">Wayfinding</span></td></tr>
+        <tr><td class="rec-id">#47</td><td>Every navigation path taking customer to business tax setup instead of personal tax</td><td><span class="tab-src">Tab 4</span></td><td class="sq">'where do I start' + business tax landing page</td><td><span class="prob-tag wayfinding">Wayfinding</span></td></tr>
+        <tr><td class="rec-id">#204</td><td>"I literally got stuck on the first page where it says where should we start today?"</td><td><span class="tab-src">Tab 4</span></td><td class="sq">'where do I start' + business tax landing page</td><td><span class="prob-tag wayfinding">Wayfinding</span></td></tr>
+        <tr><td class="rec-id">#301</td><td>"Start for Free" directs customer to expert advice — not expected entry point</td><td><span class="tab-src">Tab 4</span></td><td class="sq">'where do I start' + business tax landing page</td><td><span class="prob-tag wayfinding">Wayfinding</span><span class="prob-tag brand">Brand</span></td></tr>
+        <tr><td class="rec-id">#318</td><td>Business vs. personal choice presented before establishing if customer owns a business</td><td><span class="tab-src">Tab 4</span></td><td class="sq">'where do I start' + business tax landing page</td><td><span class="prob-tag wayfinding">Wayfinding</span><span class="prob-tag brand">Brand</span></td></tr>
+        <tr><td class="rec-id">#356</td><td>QB LLC owner clicks "start taxes" in QuickBooks → TurboTax; immediately unsure how data will transfer</td><td><span class="tab-src">Tab 4</span></td><td class="sq">'where do I start' + business tax landing page</td><td><span class="prob-tag qbtt">QB→TT</span><span class="prob-tag wayfinding">Wayfinding</span></td></tr>
+        <tr><td class="rec-id">#390</td><td>Told to complete business taxes first — tried "get started," it didn't connect her with anyone</td><td><span class="tab-src">Tab 4</span></td><td class="sq">'where do I start' + business tax landing page</td><td><span class="prob-tag wayfinding">Wayfinding</span><span class="prob-tag credibility">Expert Credibility</span></td></tr>
+        <tr><td class="rec-id">#72</td><td>Expected $150 (personal rate); informed starting price is $449 — purchase blocked</td><td><span class="tab-src">Tab 5</span></td><td class="sq">customer impression of price for business tax pages</td><td><span class="prob-tag brand">Brand</span></td></tr>
+        <tr><td class="rec-id">#176</td><td>$449 — significantly more than last year (less than half); no explanation</td><td><span class="tab-src">Tab 5</span></td><td class="sq">customer impression of price for business tax pages</td><td><span class="prob-tag brand">Brand</span></td></tr>
+        <tr><td class="rec-id">#200</td><td>Quoted $190 at registration; payment page shows $518</td><td><span class="tab-src">Tab 5</span></td><td class="sq">customer impression of price for business tax pages</td><td><span class="prob-tag brand">Brand</span></td></tr>
+        <tr><td class="rec-id">#211</td><td>$150 offer on landing page; after starting, price shows $775+ — 5× escalation</td><td><span class="tab-src">Tab 5</span></td><td class="sq">customer impression of price for business tax pages</td><td><span class="prob-tag brand">Brand</span></td></tr>
+        <tr><td class="rec-id">#437</td><td>"Why is it that much… we can't afford to pay another $600 this year"</td><td><span class="tab-src">Tab 5</span></td><td class="sq">customer impression of price for business tax pages</td><td><span class="prob-tag brand">Brand</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- VOC HALLUCINATION CHECK -->
+  <div class="hc-section" style="margin-top:28px;">
+    <div class="hc-title">📋 Source & Integrity Notes — VOC Suite Tab</div>
+    <div class="hc-item"><span class="hc-label hc-backed">✅ DATA-BACKED</span> All individual signals include Tab number and Record ID traceable to the Google Sheets export provided by Julia Gretsky, Jan–Jun 2026.</div>
+    <div class="hc-item"><span class="hc-label hc-inferred">🔶 INFERENCE</span> Pain point and need summaries under each tab are synthesized themes inferred from record patterns — not individually quoted verbatims. Labeled throughout as "Synthesized."</div>
+    <div class="hc-item"><span class="hc-label hc-assumed">⚠️ NOTE</span> Record IDs are as exported from the Google Sheets. They have not been independently verified against the live VOC Suite system. If a record cannot be found by ID, re-run the search query listed to re-locate it.</div>
+    <div style="margin-top:10px;font-size:11.5px;color:var(--text-light);">📊 <strong>Output Confidence: Medium-High.</strong> Individual signals are traceable. Theme synthesis is labeled as inference. Record IDs are from the provided export and should be verified before referencing externally.</div>
+  </div>
+
+</div>
+
+<!-- ====================================================
+     TAB 3: FIND PHASE STRATEGY GROUNDING
+     ==================================================== -->
+<div id="tab-strategy" class="main-panel">
+
+  <div class="strategy-notice">
+    <strong>⚠️ This tab contains Intuit strategy context — not primary customer research.</strong> The statistics, segment definitions, and strategic priorities below are sourced from internal Intuit strategy documents and project instructions. They should not be mixed with or used as evidence alongside the HeyMarvin or VOC Suite customer data. Use this tab to contextualize findings, not to substantiate them.
+    <br><br><span class="confidence-badge cb-sourced" style="margin-left:0;">📎 Sourced</span> — All content here is from Intuit strategy documentation (FY27 OIBT Strategy, Find Phase project instructions). No primary customer research data.
+  </div>
+
+  <div class="strategy-section">
+    <h3>Find Phase — Definition</h3>
+    <p style="font-size:13px;line-height:1.6;color:var(--text);">The Find Phase is the first phase of the business tax filing experience, defined by the customer question:</p>
+    <blockquote style="font-style:italic;font-size:14px;font-weight:600;border-left:3px solid var(--blue);padding-left:14px;margin:12px 0;color:var(--blue);">"Is this the right service for my business and personal situation?"</blockquote>
+    <p style="font-size:12px;color:var(--text-light);">Primary pod: Expert Continuity · Cross-cutting: Product lineup confusion, Channel consistency</p>
+    <p style="font-size:12px;color:var(--text-light);margin-top:6px;"><span class="confidence-badge cb-sourced">📎 Sourced</span> Find Phase project instructions / OIBT FY27 Strategy documentation</p>
+  </div>
+
+  <div class="goal-banner">
+    <div class="goal-icon">🎯</div>
+    <div class="goal-text"><strong>FY27 Goal 1: Win the Unattached Customer.</strong> Get ~4.5M unattached solo business owners (the "Maya" segment) to choose Intuit before competitors lock them in. The Find Phase is directly responsible for creating the conditions for Goal 1. <span style="color:rgba(255,255,255,0.55);font-size:11.5px;display:block;margin-top:4px;">📎 Source: OIBT FY27 Strategy documentation — this is strategy intent, not a validated research outcome.</span></div>
+  </div>
+
+  <div class="framing-box">
+    <div class="framing-label">CX North Star Vision <span style="color:rgba(255,255,255,0.4);font-size:10px;font-weight:400;margin-left:8px;">📎 Source: Find Phase project instructions</span></div>
+    <div class="vision-quote">"A BGS customer arriving at any Intuit touchpoint should immediately understand they are in the right place, see evidence of real expert capability before being asked to commit, and have a clear path to the right service level without self-diagnosing. The 'Start Anywhere, Finish Anywhere' promise requires a consistent experience across digital, in-store, and virtual channels."</div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:rgba(255,255,255,0.5);margin-bottom:12px;">4 Core Find Phase Problems — from Strategy Documentation</div>
+    <div class="problem-chips">
+      <div class="problem-chip">
+        <div class="chip-label brand">① Brand Calcification</div>
+        <div class="chip-desc">TurboTax is not in the consideration set for BGS customers. Brand is calcified as DIY-only.</div>
+        <div class="chip-source">📎 Strategy doc — not quantified in HeyMarvin or VOC research analyzed here</div>
+      </div>
+      <div class="problem-chip">
+        <div class="chip-label credibility">② Expert Credibility Gap</div>
+        <div class="chip-desc">Expert network dismissed as call-center support. Perception gap must be closed before the customer has to ask.</div>
+        <div class="chip-source">📎 Strategy doc — corroborated by HeyMarvin #55829 and VOC Tab 3</div>
+      </div>
+      <div class="problem-chip">
+        <div class="chip-label wayfinding">③ Wayfinding Failures</div>
+        <div class="chip-desc">"1 in 5 BGS customers misrouted to Personal Tax pages. 26% of surveyed abandoners had no SE income." — these statistics are from Intuit strategy documents, not from the HeyMarvin or VOC data in this brief.</div>
+        <div class="chip-source">⚠️ Strategy doc only — NOT from this brief's research. Validate source before citing in external work.</div>
+      </div>
+      <div class="problem-chip">
+        <div class="chip-label qbtt">④ QB/TT Connection Underdelivering</div>
+        <div class="chip-desc">QB customers arrive expecting integrated experience and leave disappointed.</div>
+        <div class="chip-source">📎 Strategy doc — corroborated by HeyMarvin #50577, #54075 and VOC Tab 4</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="strategy-section">
+    <h3>FY27 Find Phase Deliverables</h3>
+    <p style="font-size:12px;color:var(--text-light);margin-bottom:12px;"><span class="confidence-badge cb-sourced">📎 Sourced</span> From OIBT FY27 project instructions. These are stated deliverables, not research findings.</p>
+    <div class="deliverable-grid">
+      <div class="deliverable-card">
+        <div class="d-label cx">CX-Led</div>
+        <strong style="font-size:13px;">Active Trust Signal Standard</strong>
+        <p style="font-size:12px;color:var(--text-light);margin-top:4px;line-height:1.5;">Define how experts demonstrate specialization and credibility in the first interaction — what they say, how they reference the customer's business type unprompted.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="d-label product">Supporting Product</div>
+        <strong style="font-size:13px;">Passive Trust Signal Architecture</strong>
+        <p style="font-size:12px;color:var(--text-light);margin-top:4px;line-height:1.5;">Define what credential, in what format, at what moment makes a BGS customer believe a real expert who understands their business is available.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="d-label product">Supporting Product</div>
+        <strong style="font-size:13px;">Omnichannel Consistency Standards</strong>
+        <p style="font-size:12px;color:var(--text-light);margin-top:4px;line-height:1.5;">One coherent service across digital, in-store, and virtual so no channel transition forces a restart.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="d-label product">Supporting Product</div>
+        <strong style="font-size:13px;">Industry Vertical Experience Standard</strong>
+        <p style="font-size:12px;color:var(--text-light);margin-top:4px;line-height:1.5;">12–15 highest-TAM verticals — define how industry-specific expertise signals surface in Find for each.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="d-label product">Supporting Product</div>
+        <strong style="font-size:13px;">Differentiated Discovery Experiences</strong>
+        <p style="font-size:12px;color:var(--text-light);margin-top:4px;line-height:1.5;">How experts show up across the TurboTax Path and QuickBooks Path front doors.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="d-label product">Supporting Product</div>
+        <strong style="font-size:13px;">Shopping & Merchandising Experience</strong>
+        <p style="font-size:12px;color:var(--text-light);margin-top:4px;line-height:1.5;">Life-moments-based approach to service level selection — pricing transparency standard with a visible starting price before commitment.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="strategy-section">
+    <h3>How Research Maps to Strategy</h3>
+    <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;"><span class="confidence-badge cb-inferred">🔶 Inference</span> The connections below are researcher synthesis — research findings do not explicitly name FY27 deliverables.</p>
+    <div class="gap-list">
+      <div class="gap-item" style="border-left:3px solid var(--blue);"><div class="gap-icon">🔗</div><div><strong>Passive Trust Signal Architecture</strong> is directly demanded by VOC Tab 3 Rec #3: "I wanna see their credentials and then I will decide." Also corroborated by HeyMarvin #55829 (Maria D.).</div></div>
+      <div class="gap-item" style="border-left:3px solid var(--red);"><div class="gap-icon">🔗</div><div><strong>Shopping & Merchandising Experience</strong> (pricing transparency) is directly demanded by VOC Tab 5 Recs #72, #200, #211 — mid-flow price escalation pattern across multiple records.</div></div>
+      <div class="gap-item" style="border-left:3px solid #7B2FA8;"><div class="gap-icon">🔗</div><div><strong>Differentiated Discovery Experiences</strong> (QB path vs. TT path) is directly demanded by HeyMarvin #50577 (Marnie W. routing failure) and VOC Tab 4 Rec #356 (QB→TT context drop).</div></div>
+      <div class="gap-item" style="border-left:3px solid var(--green);"><div class="gap-icon">🔗</div><div><strong>Active Trust Signal Standard</strong> is the most strongly corroborated FY27 deliverable — demanded by HeyMarvin #55829 (Maria D.) and validated by #49718 (expert continuity as WTP driver).</div></div>
+    </div>
+  </div>
+
+  <div class="hc-section">
+    <div class="hc-title">📋 Source & Integrity Notes — Strategy Tab</div>
+    <div class="hc-item"><span class="hc-label hc-sourced">📎 SOURCED</span> All statistics in this tab (1 in 5 BGS misrouted; 26% abandoners with no SE income; ~4.5M unattached sole props; $40B market) are from Intuit strategy documents and project instructions — NOT from the HeyMarvin or VOC Suite research analyzed in this brief. Do not mix these statistics with primary research citations.</div>
+    <div class="hc-item"><span class="hc-label hc-sourced">📎 SOURCED</span> FY27 deliverables, Goal 1, Maya/Dan segment definitions, and the CX Vision quote are from OIBT FY27 strategy documentation. They represent stated strategic intent, not validated customer outcomes.</div>
+    <div class="hc-item"><span class="hc-label hc-inferred">🔶 INFERENCE</span> Research-to-deliverable mappings in the "How Research Maps to Strategy" section are researcher synthesis — the research does not explicitly name FY27 deliverables. The connections are directionally sound but should be validated with the product team before presenting as confirmed alignment.</div>
+    <div style="margin-top:10px;font-size:11.5px;color:var(--text-light);">📊 <strong>Output Confidence: High for sourcing clarity.</strong> All strategic claims are clearly labeled as sourced from strategy docs. No strategic statistics are presented as primary research findings.</div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="brief-footer">
+  HeyMarvin pulled June 9, 2026 &nbsp;·&nbsp; Projects: #50577, #54075, #49718, #55829 &nbsp;·&nbsp; VOC Suite: Jan–Jun 2026, 5 searches · ~2,500 records &nbsp;·&nbsp; External customers only &nbsp;·&nbsp; Synthesis by Claude / Cowork
+</div>
+
+</div>
+
+<script>
+function switchMain(btn, panelId) {
+  document.querySelectorAll('.main-tab').forEach(function(b){ b.classList.remove('mt-active'); });
+  document.querySelectorAll('.main-panel').forEach(function(p){ p.classList.remove('mp-active'); });
+  btn.classList.add('mt-active');
+  document.getElementById(panelId).classList.add('mp-active');
+}
+function switchVoc(btn, panelId) {
+  document.querySelectorAll('.voc-subtab').forEach(function(b){ b.classList.remove('vst-active'); });
+  document.querySelectorAll('.voc-panel').forEach(function(p){ p.classList.remove('vp-active'); });
+  btn.classList.add('vst-active');
+  document.getElementById(panelId).classList.add('vp-active');
+}
+</script>
+</body>
+</html>
